@@ -7,7 +7,6 @@ include("function.php");
 $user_data = check_login($conn);
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST'){
-    //$name = $_POST['name'];
     $mo_no = $_POST['mo_no'];
     $pass = $_POST['pass'];
     if (!empty($mo_no) && !empty($pass)){
@@ -155,7 +154,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
       </div>
       <div class="form-group">
         <label for="pass">Password:</label>
-        <input type="pass" id="pass" name="pass" required>
+        <input type="password" id="pass" name="pass" required>
       </div>
       <div class="form-group">
         <button style="margin-bottom: 10px;" type="submit" name="submit">Login</button>

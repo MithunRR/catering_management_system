@@ -13,7 +13,7 @@ $user_data = check_login($conn);
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Catering</title>
+    <title>Zaika</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
         integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -32,13 +32,14 @@ $user_data = check_login($conn);
             <ul class="menu-items">
                 <li><a href="#home">Home</a></li>
                 <li><a href="#about">About</a></li>
-                <li><a href="#food">Category</a></li>
+                <li><a href="#food">Trending</a></li>
                 <li><a href="#food-menu">Menu</a></li>
                 <li><a href="#contact">Contact</a></li>
+                <li><a href="#contact">Bookings</a></li>
                 <?php
                 if ($user_data) {
-                    echo '<li>Welcome, ' . $user_data['f_name'] . '!</li>';
-                    echo '<li><a href="logout.php">Logout</a></li>';
+                    echo '<li>Hi, ' . $user_data['f_name'] . '.</li>';
+                    echo '<li><a href="logout.php" style="color:red">Logout</a></li>';
                 } else {
                     echo '<li><a href="login.php">Login</a></li>';
                     echo '<li><a href="signup.php">Signup</a></li>';
@@ -46,15 +47,15 @@ $user_data = check_login($conn);
                 ?>
                 
             </ul>
-            <h1 class="logo">RS</h1>
+            <h1 class="logo">Zaika</h1>
         </div>
     </nav>
 
     <section class="showcase-area" id="showcase">
         <div class="showcase-container">
-            <h1 class="main-title" id="home">Eat Right Food</h1>
-            <p>Eat Healty, it is good for our health.</p>
-            <a href="#food-menu" class="btn btn-primary">Menu</a>
+            <h1 class="main-title" id="home">WELCOME TO ZAIKA CATERERS</h1>
+            <p>A Real Diamond of Catering Industry.</p>
+            <a href="#food-menu" class="btn btn-primary">EXPLORE OUR MENU</a>
         </div>
     </section>
 
@@ -62,17 +63,17 @@ $user_data = check_login($conn);
         <div class="about-wrapper container">
             <div class="about-text">
                 <p class="small">About Us</p>
-                <h2>We've beem making healthy food last for 10 years</h2>
+                <h2>Serving Good food</h2>
                 <p>
-                    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Esse ab
-                    eos omnis, nobis dignissimos perferendis et officia architecto,
-                    fugiat possimus eaque qui ullam excepturi suscipit aliquid optio,
-                    maiores praesentium soluta alias asperiores saepe commodi
-                    consequatur? Perferendis est placeat facere aspernatur!
+                Looking for a perfect food affair to complement your special 
+                occasion? Look no further! Zaika Caterers provide a sumptuous food 
+                itinerary to fulfill your each and every catering need. Be it a large, 
+                mid or small sized event, our full-range of outdoor and indoor catering
+                 services cover complete food preparation and presentation for formal and informal gatherings.
                 </p>
             </div>
             <div class="about-img">
-                <img src="https://i.postimg.cc/mgpwzmx9/about-photo.jpg" alt="food" />
+                <img src="assset\images\cust_index\about-photo2.jpg" alt="food" />
             </div>
         </div>
     </section>
@@ -81,9 +82,9 @@ $user_data = check_login($conn);
         <div class="food-container container">
             <div class="food-type fruite">
                 <div class="img-container">
-                    <img src="https://i.postimg.cc/yxThVPXk/food1.jpg" alt="error" />
+                    <img src="assset\images\cust_index\food1.jpg" alt="error" />
                     <div class="img-content">
-                        <h3>fruite</h3>
+                        <h3>Silver Platters</h3>
                         <a href="https://en.wikipedia.org/wiki/Fruit" class="btn btn-primary" target="blank">learn
                             more</a>
                     </div>
@@ -91,9 +92,9 @@ $user_data = check_login($conn);
             </div>
             <div class="food-type vegetable">
                 <div class="img-container">
-                    <img src="https://i.postimg.cc/Nffm6Rkk/food2.jpg" alt="error" />
+                    <img src="assset\images\cust_index\food2.jpg" alt="error" />
                     <div class="img-content">
-                        <h3>vegetable</h3>
+                        <h3>Golden Platters</h3>
                         <a href="https://en.wikipedia.org/wiki/Vegetable" class="btn btn-primary" target="blank">learn
                             more</a>
                     </div>
@@ -101,9 +102,9 @@ $user_data = check_login($conn);
             </div>
             <div class="food-type grin">
                 <div class="img-container">
-                    <img src="https://i.postimg.cc/76ZwsPsd/food3.jpg" alt="error" />
+                    <img src="assset\images\cust_index\food3.jpg" alt="error" />
                     <div class="img-content">
-                        <h3>grin</h3>
+                        <h3>Platinum Platters</h3>
                         <a href="https://en.wikipedia.org/wiki/Grain" class="btn btn-primary" target="blank">learn
                             more</a>
                     </div>
@@ -116,7 +117,7 @@ $user_data = check_login($conn);
         <div class="food-menu-container container">
             <div class="food-menu-item">
                 <div class="food-img">
-                    <img src="https://i.postimg.cc/wTLMsvSQ/food-menu1.jpg" alt="" />
+                    <img src="assset\images\cust_index\menu1.jpg" alt="" />
                 </div>
                 <div class="food-description">
                     <h2 class="food-titile">Food Menu Item 1</h2>
@@ -130,7 +131,7 @@ $user_data = check_login($conn);
 
             <div class="food-menu-item">
                 <div class="food-img">
-                    <img src="https://i.postimg.cc/sgzXPzzd/food-menu2.jpg" alt="error" />
+                    <img src="assset\images\cust_index\menu2.jpg" alt="error" />
                 </div>
                 <div class="food-description">
                     <h2 class="food-titile">Food Menu Item 2</h2>
@@ -143,7 +144,7 @@ $user_data = check_login($conn);
             </div>
             <div class="food-menu-item">
                 <div class="food-img">
-                    <img src="https://i.postimg.cc/8zbCtYkF/food-menu3.jpg" alt="" />
+                    <img src="assset\images\cust_index\menu3.jpg" alt="" />
                 </div>
                 <div class="food-description">
                     <h2 class="food-titile">Food Menu Item 3</h2>
@@ -156,7 +157,7 @@ $user_data = check_login($conn);
             </div>
             <div class="food-menu-item">
                 <div class="food-img">
-                    <img src="https://i.postimg.cc/Yq98p5Z7/food-menu4.jpg" alt="" />
+                    <img src="assset\images\cust_index\menu4.jpg" alt="" />
                 </div>
                 <div class="food-description">
                     <h2 class="food-titile">Food Menu Item 4</h2>
@@ -169,7 +170,7 @@ $user_data = check_login($conn);
             </div>
             <div class="food-menu-item">
                 <div class="food-img">
-                    <img src="https://i.postimg.cc/KYnDqxkP/food-menu5.jpg" alt="" />
+                    <img src="assset\images\cust_index\menu5.jpg" alt="" />
                 </div>
                 <div class="food-description">
                     <h2 class="food-titile">Food Menu Item 5</h2>
@@ -182,7 +183,7 @@ $user_data = check_login($conn);
             </div>
             <div class="food-menu-item">
                 <div class="food-img">
-                    <img src="https://i.postimg.cc/Jnxc8xQt/food-menu6.jpg" alt="" />
+                    <img src="assset\images\cust_index\menu6.jpg" alt="" />
                 </div>
                 <div class="food-description">
                     <h2 class="food-titile">Food Menu Item 6</h2>
@@ -260,18 +261,39 @@ $user_data = check_login($conn);
             </div>
         </div>
     </section>
+
+    <?php
+        if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['name'], $_POST['messege'])) {
+            $name = $_POST['name'];
+            $email = $_POST['email'];
+            $messege = $_POST['messege'];
+            
+            if (!empty($name) && !empty($email) && !empty($messege)) {
+                $query = "INSERT INTO contacts_form (name, email, messege) VALUES ('$name', '$email', '$messege')";
+                mysqli_query($conn, $query);
+                header("Location: index.php");
+                echo '<script>alert("Form submitted successfully!");</script>';
+                die;
+            } else {
+                echo '<script>alert("Please enter valid information.");</script>';
+            }
+        }
+        
+    ?>
+
     <section id="contact">
         <div class="contact-container container">
             <div class="contact-img">
                 <img src="https://i.postimg.cc/1XvYM67V/restraunt2.jpg" alt="" />
             </div>
-
             <div class="form-container">
                 <h2>Contact Us</h2>
-                <input type="text" placeholder="Your Name" />
-                <input type="email" placeholder="E-Mail" />
-                <textarea cols="30" rows="6" placeholder="Type Your Message"></textarea>
-                <a href="#" class="btn btn-primary">Submit</a>
+                <form action="#" method="post">
+                    <input type="text" name="name" placeholder="Your Name" />
+                    <input type="email" name="email" placeholder="E-Mail" />
+                    <textarea cols="30" name="messege" rows="6" placeholder="Type Your Message"></textarea>
+                    <button type="submit" class="btn btn-primary" style="padding-top:11px;padding-bottom:11px;">Submit</button>
+                </form>
             </div>
         </div>
     </section>
