@@ -1,14 +1,23 @@
-<html lang="en">
+<?php
+session_start();
 
+include("connection.php");
+include("function.php");
+
+$user_data = check_login($conn);
+
+?>
+
+<html lang="en">
 <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Restraunt</title>
+    <title>Catering</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
         integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="assset/css/style.css" />
 </head>
 
 <body>
@@ -25,12 +34,22 @@
                 <li><a href="#about">About</a></li>
                 <li><a href="#food">Category</a></li>
                 <li><a href="#food-menu">Menu</a></li>
-                <li><a href="#testimonials">Testimonial</a></li>
                 <li><a href="#contact">Contact</a></li>
+                <?php
+                if ($user_data) {
+                    echo '<li>Welcome, ' . $user_data['f_name'] . '!</li>';
+                    echo '<li><a href="logout.php">Logout</a></li>';
+                } else {
+                    echo '<li><a href="login.php">Login</a></li>';
+                    echo '<li><a href="signup.php">Signup</a></li>';
+                }
+                ?>
+                
             </ul>
             <h1 class="logo">RS</h1>
         </div>
     </nav>
+
     <section class="showcase-area" id="showcase">
         <div class="showcase-container">
             <h1 class="main-title" id="home">Eat Right Food</h1>
@@ -262,7 +281,7 @@
     <!-- .................../ JS Code for smooth scrolling /...................... -->
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="app.js"></script>
+    <script src="assset/js/script.js"></script>
 
 </html>
 
