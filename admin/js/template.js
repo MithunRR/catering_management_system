@@ -1,5 +1,6 @@
+'use strict';
+
 (function($) {
-  'use strict';
   $(function() {
     var body = $('body');
     var contentWrapper = $('.content-wrapper');
@@ -8,7 +9,7 @@
     var sidebar = $('.sidebar');
 
     //Add active class to nav-link based on url dynamically
-    //Active class can be hard coded directly in html file also as required
+    //Active class can be hard coded directly in html file also as 
 
     function addActiveClass(element) {
       if (current === "") {

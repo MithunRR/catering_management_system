@@ -12616,7 +12616,7 @@ fieldset:disabled .btn {
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  padding-top: 0.5rem;
+  /* padding-top: 0.5rem; */
   padding-bottom: 0.5rem;
 }
 
@@ -13171,7 +13171,7 @@ fieldset:disabled .btn {
 }
 
 .card-title {
-  margin-bottom: 0.5rem;
+  margin-bottom: 1rem !important;
 }
 
 .card-subtitle {
@@ -16251,9 +16251,9 @@ fieldset:disabled .btn {
   padding-top: 1.5rem !important;
 }
 
-.pt-5 {
+/* .pt-5 {
   padding-top: 3rem !important;
-}
+} */
 
 .pe-0 {
   padding-right: 0 !important;
@@ -20898,7 +20898,7 @@ code {
 
 .card .card-title {
   color: #787878;
-  margin-bottom: 1.2rem;
+  margin-bottom: 0rem !important;
   text-transform: uppercase;
   font-size: 0.875rem;
   font-weight: 500;
@@ -21585,7 +21585,7 @@ dl li {
   vertical-align: middle;
   line-height: 1;
   white-space: nowrap;
-  padding: 1.25rem 0.9375rem;
+  padding: 0.25rem 0.9375rem;
 }
 
 .table td {
