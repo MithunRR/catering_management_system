@@ -1,3 +1,32 @@
+<?php
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["item_name"])) {
+    include __DIR__ . '/../../../connection.php';
+    include __DIR__ . '/../../../function.php';
+
+    $name = $_POST['item_name'];
+    $category = $_POST['category'];
+    $price = $_POST['price'];
+    $desc = $_POST['desc'];
+
+    $target_dir = "uploads/";
+    $img = $target_dir . basename($_FILES["item_image"]["name"]);
+    move_uploaded_file($_FILES["item_image"]["tmp_name"], $img);
+
+    $sql = "INSERT INTO menu_items (name, category, price, descr, img) 
+            VALUES ('$name', '$category', '$price', '$desc', '$img')";
+
+    if ($conn->query($sql) === TRUE) {
+        echo "Record inserted successfully";
+    } else {
+        echo "Error: " . $sql . "<br>" . $conn->error;
+    }
+
+    header("location: basic-table.php");
+
+    $conn->close();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -20,11 +49,11 @@
 
 <body>
   <div class="container-scroller">
-    <!-- partial:../../partials/_navbar.html -->
+    <!-- partial:../../partials/_navbar.php -->
     <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
       <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
-        <a class="navbar-brand brand-logo me-5" href="../../index.html"><img src="http://localhost/Catering/assset/images/cust_index/zaika_logo.png" class="me-2" alt="logo"/></a>
-        <a class="navbar-brand brand-logo-mini" href="../../index.html"><img src="http://localhost/Catering/assset/images/cust_index/zaika_logo.png" alt="logo"/></a>
+        <a class="navbar-brand brand-logo me-5" href="../../index.php"><img src="http://localhost/Catering/assset/images/cust_index/zaika_logo.png" class="me-2" alt="logo"/></a>
+        <a class="navbar-brand brand-logo-mini" href="../../index.php"><img src="http://localhost/Catering/assset/images/cust_index/zaika_logo.png" alt="logo"/></a>
       </div>
       <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
         <ul class="navbar-nav mr-lg-2">
@@ -155,30 +184,30 @@
     </nav>
     <!-- partial -->
     <div class="container-fluid page-body-wrapper">
-      <!-- partial:../../partials/_sidebar.html -->
+      <!-- partial:../../partials/_sidebar.php -->
       <nav class="sidebar sidebar-offcanvas" id="sidebar">
         <ul class="nav">
           <li class="nav-item">
-            <a class="nav-link" href="../../index.html">
+            <a class="nav-link" href="../../index.php">
               <i class="ti-shield menu-icon"></i>
               <span class="menu-title">Dashboard</span>
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="../../pages/forms/basic_elements.html">
+            <a class="nav-link" href="../../pages/forms/basic_elements.php">
               <i class="ti-layout-list-post menu-icon"></i>
               <span class="menu-title">Form elements</span>
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="../../pages/charts/chartjs.html">
+            <a class="nav-link" href="../../pages/charts/chartjs.php">
               <i class="ti-pie-chart menu-icon"></i>
               <span class="menu-title">Charts</span>
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="../../pages/tables/basic-table.html">
-              <i class="ti-view-list-alt menu-icon"></i>
+            <a class="nav-link" href="../../pages/tables/basic-table.php">
+              <i class="ti-view-list-alt menu-icon fa fa-cutlery" aria-hidden="true"></i>
               <span class="menu-title">Menu</span>
             </a>
           </li>
@@ -190,11 +219,11 @@
             </a>
             <div class="collapse" id="auth">
               <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="../../pages/samples/login.html"> Login </a></li>
-                <li class="nav-item"> <a class="nav-link" href="../../pages/samples/login-2.html"> Login 2 </a></li>
-                <li class="nav-item"> <a class="nav-link" href="../../pages/samples/register.html"> Register </a></li>
-                <li class="nav-item"> <a class="nav-link" href="../../pages/samples/register-2.html"> Register 2 </a></li>
-                <li class="nav-item"> <a class="nav-link" href="../../pages/samples/lock-screen.html"> Lockscreen </a></li>
+                <li class="nav-item"> <a class="nav-link" href="../../pages/samples/login.php"> Login </a></li>
+                <li class="nav-item"> <a class="nav-link" href="../../pages/samples/login-2.php"> Login 2 </a></li>
+                <li class="nav-item"> <a class="nav-link" href="../../pages/samples/register.php"> Register </a></li>
+                <li class="nav-item"> <a class="nav-link" href="../../pages/samples/register-2.php"> Register 2 </a></li>
+                <li class="nav-item"> <a class="nav-link" href="../../pages/samples/lock-screen.php"> Lockscreen </a></li>
               </ul>
             </div>
           </li>
@@ -220,24 +249,34 @@
               </div>
             </div>
           </div>
+          
+
           <div class="col-12 grid-margin stretch-card" id="addItemForm" style="display: none;">
             <div class="card">
               <div class="card-body">
-                <form class="forms-sample">
+
+                <form class="forms-sample" action="basic-table.php" method="post" enctype="multipart/form-data">
+                <!-- <form class="forms-sample" action="process_form.php" method="post" enctype="multipart/form-data"> -->
                   <div class="form-group">
                     <label for="exampleInputName1">Item Name</label>
-                    <input style="height: 10px !important;" type="text" class="form-control" id="exampleInputName1" placeholder="Item Name">
+                    <input style="height: 10px !important;" type="text" class="form-control" id="item_name" name="item_name" placeholder="Item Name">
                   </div>
                   <div class="form-group">
                     <label for="exampleSelectGender">Category</label>
-                      <select class="form-control" id="exampleSelectGender">
+                      <select class="form-control" id="category" name="category">
                         <option style="height: 10px !important;">Rice</option>
+                        <option style="height: 10px !important;">Dal</option>
+                        <option style="height: 10px !important;">Roti/Paratha/Bread</option>
+                        <option style="height: 10px !important;">Main Course</option>
+                        <option style="height: 10px !important;">Curries</option>
                         <option style="height: 10px !important;">Sweet</option>
+                        <option style="height: 10px !important;">Chat</option>
+
                       </select>
                     </div>
                   <div class="form-group">
                     <label>Upload Image</label>
-                    <input style="height: 10px !important;" type="file" name="img[]" class="file-upload-default">
+                    <input style="height: 10px !important;" type="file" name="item_image" id="fileToUpload" class="file-upload-default">
                     <div class="input-group col-xs-12">
                       <input style="height: 10px !important;" type="text" class="form-control file-upload-info" disabled placeholder="Upload Image">
                       <span style="height: 10px !important;" class="input-group-append">
@@ -247,18 +286,22 @@
                   </div>
                   <div class="form-group">
                     <label for="exampleInputCity1">Price</label>
-                    <input style="height: 10px !important;" type="text" class="form-control" id="exampleInputCity1" placeholder="Price">
+                    <input style="height: 10px !important;" type="text" class="form-control" name="price" id="price" placeholder="Price">
                   </div>
                   <div class="form-group">
                     <label for="exampleTextarea1">Discription</label>
-                    <textarea style="height: 20px !important;" class="form-control" id="exampleTextarea1" rows="4"></textarea>
+                    <textarea style="height: 20px !important;" class="form-control" id="desc" name="desc" rows="4"></textarea>
                   </div>
                   <button type="submit" class="btn btn-primary me-2">Submit</button>
                   <button class="btn btn-light">Cancel</button>
                 </form>
+
               </div>
             </div>
           </div>
+
+
+
           <div class="row">
             <div class="col-lg-12 grid-margin stretch-card">
               <div class="card">
@@ -286,7 +329,39 @@
                         </tr>
                       </thead>
                       <tbody class="pt-1">
-                        <tr style="padding: 5px 5px !important">
+                      <?php 
+                        include __DIR__ . '/../../../connection.php';
+                        $sql = "SELECT name, price FROM menu_items WHERE category='Rice'";
+                        $rice_cat_data = mysqli_query($conn, $sql);
+                        $rice_row = mysqli_num_rows($rice_cat_data);
+                        // echo $income_row;
+                        if($rice_row>0){
+                          $counter = 1;
+                          while ($rice_row_no = mysqli_fetch_assoc($rice_cat_data)){
+                           echo '<tr style="padding: 5px 5px !important">';
+                           echo '  <td>' . $counter++ . '</td>';
+                         echo '  <td>'.$rice_row_no['name'].'</td>';
+                         echo '  <td>'.$rice_row_no['price'].'</td>';
+                         echo '  <td style="width: 5%;">';
+                         echo '    <button type="button" style="padding: 5px; border-radius:5px;border:none;outline:none; background-color:white; color:rgb(0, 136, 255);">';
+                         echo '      <i style="font-size: 20px;" class="fa fa-pencil-square-o" aria-hidden="true"></i>';
+                         echo '    </button>';
+                         echo '  </td>';
+                         echo '  <td style="width: 5%;">';
+                         echo '    <button type="button" style="padding: 5px; border-radius:5px;border:none;outline:none; background-color:white; color:rgb(255, 0, 0);">';
+                         echo '      <i style="font-size: 20px;" class="fa fa-trash" aria-hidden="true"></i>';
+                         echo '    </button>';
+                         echo '  </td>';
+                         echo '</tr>';
+                        }
+                        }
+                        else{
+                            echo '  <td style="padding:10px 0; text-align:center; font-size:16px" colspan=5>';
+                             echo ' Category is empty, please add menu items ! ';
+                             echo '  </td>';
+                        }
+                      ?>
+                        <!-- <tr style="padding: 5px 5px !important">
                           <td>
                             1
                           </td>
@@ -306,7 +381,8 @@
                               <i style="font-size: 20px;" class="fa fa-trash" aria-hidden="true"></i>
                             </button>
                           </td>
-                        </tr>
+                        </tr> -->
+
                       </tbody>
                     </table>
                   </div>
@@ -340,27 +416,38 @@
                         </tr>
                       </thead>
                       <tbody>
-                        <tr>
-                          <td>
-                            1
-                          </td>
-                          <td>
-                            Dal Fry
-                          </td>
-                          <td>
-                            100
-                          </td>
-                          <td style="width: 5%;">
-                            <button type="button" style="padding: 5px; border-radius:5px;border:none;outline:none; background-color:white; color:rgb(0, 136, 255);">
-                              <i style="font-size: 20px;" class="fa fa-pencil-square-o" aria-hidden="true"></i>
-                            </button>
-                          </td>
-                          <td style="width: 5%;">
-                              <button type="button" style="padding: 5px; border-radius:5px;border:none;outline:none; background-color:white; color:rgb(255, 0, 0);">
-                                <i style="font-size: 20px;" class="fa fa-trash" aria-hidden="true"></i>
-                              </button>
-                          </td>
-                        </tr>
+                      <?php 
+                        include __DIR__ . '/../../../connection.php';
+                        $sql = "SELECT name, price FROM menu_items WHERE category='Dal'";
+                        $rice_cat_data = mysqli_query($conn, $sql);
+                        $rice_row = mysqli_num_rows($rice_cat_data);
+                        // echo $income_row;
+                        if($rice_row>0){
+                          $counter = 1;
+                          while ($rice_row_no = mysqli_fetch_assoc($rice_cat_data)){
+                         echo '<tr style="padding: 5px 5px !important">';
+                         echo '  <td>' . $counter++ . '</td>';
+                         echo '  <td>'.$rice_row_no['name'].'</td>';
+                         echo '  <td>'.$rice_row_no['price'].'</td>';
+                         echo '  <td style="width: 5%;">';
+                         echo '    <button type="button" style="padding: 5px; border-radius:5px;border:none;outline:none; background-color:white; color:rgb(0, 136, 255);">';
+                         echo '      <i style="font-size: 20px;" class="fa fa-pencil-square-o" aria-hidden="true"></i>';
+                         echo '    </button>';
+                         echo '  </td>';
+                         echo '  <td style="width: 5%;">';
+                         echo '    <button type="button" style="padding: 5px; border-radius:5px;border:none;outline:none; background-color:white; color:rgb(255, 0, 0);">';
+                         echo '      <i style="font-size: 20px;" class="fa fa-trash" aria-hidden="true"></i>';
+                         echo '    </button>';
+                         echo '  </td>';
+                         echo '</tr>';
+                        }
+                        }
+                        else{
+                            echo '  <td style="padding:10px 0; text-align:center; font-size:16px" colspan=5>';
+                             echo ' Category is empty, please add menu items ! ';
+                             echo '  </td>';
+                        }
+                      ?>
                       </tbody>
                     </table>
                   </div>
@@ -394,27 +481,38 @@
                         </tr>
                       </thead>
                       <tbody>
-                        <tr>
-                          <td>
-                            1
-                          </td>
-                          <td>
-                            Lacha Paratha
-                          </td>
-                          <td>
-                            100
-                          </td>
-                          <td style="width: 5%;">
-                            <button type="button" style="padding: 5px; border-radius:5px;border:none;outline:none; background-color:white; color:rgb(0, 136, 255);">
-                              <i style="font-size: 20px;" class="fa fa-pencil-square-o" aria-hidden="true"></i>
-                            </button>
-                          </td>
-                          <td style="width: 5%;">
-                              <button type="button" style="padding: 5px; border-radius:5px;border:none;outline:none; background-color:white; color:rgb(255, 0, 0);">
-                                <i style="font-size: 20px;" class="fa fa-trash" aria-hidden="true"></i>
-                              </button>
-                          </td>
-                        </tr>
+                      <?php 
+                        include __DIR__ . '/../../../connection.php';
+                        $sql = "SELECT name, price FROM menu_items WHERE category='Roti/Paratha/Bread'";
+                        $rice_cat_data = mysqli_query($conn, $sql);
+                        $rice_row = mysqli_num_rows($rice_cat_data);
+                        // echo $income_row;
+                        if($rice_row>0){
+                          $counter=1;
+                          while ($rice_row_no = mysqli_fetch_assoc($rice_cat_data)){
+                         echo '<tr style="padding: 5px 5px !important">';
+                         echo '  <td>' . $counter++ . '</td>';
+                         echo '  <td>'.$rice_row_no['name'].'</td>';
+                         echo '  <td>'.$rice_row_no['price'].'</td>';
+                         echo '  <td style="width: 5%;">';
+                         echo '    <button type="button" style="padding: 5px; border-radius:5px;border:none;outline:none; background-color:white; color:rgb(0, 136, 255);">';
+                         echo '      <i style="font-size: 20px;" class="fa fa-pencil-square-o" aria-hidden="true"></i>';
+                         echo '    </button>';
+                         echo '  </td>';
+                         echo '  <td style="width: 5%;">';
+                         echo '    <button type="button" style="padding: 5px; border-radius:5px;border:none;outline:none; background-color:white; color:rgb(255, 0, 0);">';
+                         echo '      <i style="font-size: 20px;" class="fa fa-trash" aria-hidden="true"></i>';
+                         echo '    </button>';
+                         echo '  </td>';
+                         echo '</tr>';
+                        }
+                        }
+                        else{
+                            echo '  <td style="padding:10px 0; text-align:center; font-size:16px" colspan=5>';
+                             echo ' Category is empty, please add menu items ! ';
+                             echo '  </td>';
+                        }
+                      ?>
                       </tbody>
                     </table>
                   </div>
@@ -448,27 +546,38 @@
                         </tr>
                       </thead>
                       <tbody>
-                        <tr>
-                          <td>
-                            1
-                          </td>
-                          <td>
-                            Panner Butter Masala
-                          </td>
-                          <td>
-                            100
-                          </td>
-                          <td style="width: 5%;">
-                            <button type="button" style="padding: 5px; border-radius:5px;border:none;outline:none; background-color:white; color:rgb(0, 136, 255);">
-                              <i style="font-size: 20px;" class="fa fa-pencil-square-o" aria-hidden="true"></i>
-                            </button>
-                          </td>
-                          <td style="width: 5%;">
-                              <button type="button" style="padding: 5px; border-radius:5px;border:none;outline:none; background-color:white; color:rgb(255, 0, 0);">
-                                <i style="font-size: 20px;" class="fa fa-trash" aria-hidden="true"></i>
-                              </button>
-                          </td>
-                        </tr>
+                      <?php 
+                        include __DIR__ . '/../../../connection.php';
+                        $sql = "SELECT name, price FROM menu_items WHERE category='Main Course'";
+                        $rice_cat_data = mysqli_query($conn, $sql);
+                        $rice_row = mysqli_num_rows($rice_cat_data);
+                        // echo $income_row;
+                        if($rice_row>0){
+                          $counter=1;
+                          while ($rice_row_no = mysqli_fetch_assoc($rice_cat_data)){
+                         echo '<tr style="padding: 5px 5px !important">';
+                         echo '  <td>' . $counter++ . '</td>';
+                         echo '  <td>'.$rice_row_no['name'].'</td>';
+                         echo '  <td>'.$rice_row_no['price'].'</td>';
+                         echo '  <td style="width: 5%;">';
+                         echo '    <button type="button" style="padding: 5px; border-radius:5px;border:none;outline:none; background-color:white; color:rgb(0, 136, 255);">';
+                         echo '      <i style="font-size: 20px;" class="fa fa-pencil-square-o" aria-hidden="true"></i>';
+                         echo '    </button>';
+                         echo '  </td>';
+                         echo '  <td style="width: 5%;">';
+                         echo '    <button type="button" style="padding: 5px; border-radius:5px;border:none;outline:none; background-color:white; color:rgb(255, 0, 0);">';
+                         echo '      <i style="font-size: 20px;" class="fa fa-trash" aria-hidden="true"></i>';
+                         echo '    </button>';
+                         echo '  </td>';
+                         echo '</tr>';
+                        }
+                        }
+                        else{
+                            echo '  <td style="padding:10px 0; text-align:center; font-size:16px" colspan=5>';
+                             echo ' Category is empty, please add menu items ! ';
+                             echo '  </td>';
+                        }
+                      ?>
                       </tbody>
                     </table>
                   </div>
@@ -502,27 +611,38 @@
                         </tr>
                       </thead>
                       <tbody>
-                        <tr>
-                          <td>
-                            1
-                          </td>
-                          <td>
-                            Chole Masala
-                          </td>
-                          <td>
-                            100
-                          </td>
-                          <td style="width: 5%;">
-                            <button type="button" style="padding: 5px; border-radius:5px;border:none;outline:none; background-color:white; color:rgb(0, 136, 255);">
-                              <i style="font-size: 20px;" class="fa fa-pencil-square-o" aria-hidden="true"></i>
-                            </button>
-                          </td>
-                          <td style="width: 5%;">
-                              <button type="button" style="padding: 5px; border-radius:5px;border:none;outline:none; background-color:white; color:rgb(255, 0, 0);">
-                                <i style="font-size: 20px;" class="fa fa-trash" aria-hidden="true"></i>
-                              </button>
-                          </td>
-                        </tr>
+                      <?php 
+                        include __DIR__ . '/../../../connection.php';
+                        $sql = "SELECT name, price FROM menu_items WHERE category='Curries'";
+                        $rice_cat_data = mysqli_query($conn, $sql);
+                        $rice_row = mysqli_num_rows($rice_cat_data);
+                        // echo $income_row;
+                        if($rice_row>0){
+                          $counter=1;
+                          while ($rice_row_no = mysqli_fetch_assoc($rice_cat_data)){
+                         echo '<tr style="padding: 5px 5px !important">';
+                         echo '  <td>' . $counter++ . '</td>';
+                         echo '  <td>'.$rice_row_no['name'].'</td>';
+                         echo '  <td>'.$rice_row_no['price'].'</td>';
+                         echo '  <td style="width: 5%;">';
+                         echo '    <button type="button" style="padding: 5px; border-radius:5px;border:none;outline:none; background-color:white; color:rgb(0, 136, 255);">';
+                         echo '      <i style="font-size: 20px;" class="fa fa-pencil-square-o" aria-hidden="true"></i>';
+                         echo '    </button>';
+                         echo '  </td>';
+                         echo '  <td style="width: 5%;">';
+                         echo '    <button type="button" style="padding: 5px; border-radius:5px;border:none;outline:none; background-color:white; color:rgb(255, 0, 0);">';
+                         echo '      <i style="font-size: 20px;" class="fa fa-trash" aria-hidden="true"></i>';
+                         echo '    </button>';
+                         echo '  </td>';
+                         echo '</tr>';
+                        }
+                        }
+                        else{
+                            echo '  <td style="padding:10px 0; text-align:center; font-size:16px" colspan=5>';
+                             echo ' Category is empty, please add menu items ! ';
+                             echo '  </td>';
+                        }
+                      ?>
                       </tbody>
                     </table>
                   </div>
@@ -556,27 +676,38 @@
                         </tr>
                       </thead>
                       <tbody>
-                        <tr>
-                          <td>
-                            1
-                          </td>
-                          <td>
-                            Rasmalai
-                          </td>
-                          <td>
-                            100
-                          </td>
-                          <td style="width: 5%;">
-                            <button type="button" style="padding: 5px; border-radius:5px;border:none;outline:none; background-color:white; color:rgb(0, 136, 255);">
-                              <i style="font-size: 20px;" class="fa fa-pencil-square-o" aria-hidden="true"></i>
-                            </button>
-                          </td>
-                          <td style="width: 5%;">
-                              <button type="button" style="padding: 5px; border-radius:5px;border:none;outline:none; background-color:white; color:rgb(255, 0, 0);">
-                                <i style="font-size: 20px;" class="fa fa-trash" aria-hidden="true"></i>
-                              </button>
-                          </td>
-                        </tr>
+                      <?php 
+                        include __DIR__ . '/../../../connection.php';
+                        $sql = "SELECT name, price FROM menu_items WHERE category='Sweet'";
+                        $rice_cat_data = mysqli_query($conn, $sql);
+                        $rice_row = mysqli_num_rows($rice_cat_data);
+                        // echo $income_row;
+                        if($rice_row>0){
+                          $counter=1;
+                          while ($rice_row_no = mysqli_fetch_assoc($rice_cat_data)){
+                         echo '<tr style="padding: 5px 5px !important">';
+                         echo '  <td>' . $counter++ . '</td>';
+                         echo '  <td>'.$rice_row_no['name'].'</td>';
+                         echo '  <td>'.$rice_row_no['price'].'</td>';
+                         echo '  <td style="width: 5%;">';
+                         echo '    <button type="button" style="padding: 5px; border-radius:5px;border:none;outline:none; background-color:white; color:rgb(0, 136, 255);">';
+                         echo '      <i style="font-size: 20px;" class="fa fa-pencil-square-o" aria-hidden="true"></i>';
+                         echo '    </button>';
+                         echo '  </td>';
+                         echo '  <td style="width: 5%;">';
+                         echo '    <button type="button" style="padding: 5px; border-radius:5px;border:none;outline:none; background-color:white; color:rgb(255, 0, 0);">';
+                         echo '      <i style="font-size: 20px;" class="fa fa-trash" aria-hidden="true"></i>';
+                         echo '    </button>';
+                         echo '  </td>';
+                         echo '</tr>';
+                        }
+                        }
+                        else{
+                            echo '  <td style="padding:10px 0; text-align:center; font-size:16px" colspan=5>';
+                             echo ' Category is empty, please add menu items ! ';
+                             echo '  </td>';
+                        }
+                      ?>
                       </tbody>
                     </table>
                   </div>
@@ -610,27 +741,38 @@
                         </tr>
                       </thead>
                       <tbody>
-                        <tr>
-                          <td>
-                            1
-                          </td>
-                          <td>
-                            Pani Puri
-                          </td>
-                          <td>
-                            100
-                          </td>
-                          <td style="width: 5%;">
-                            <button type="button" style="padding: 5px; border-radius:5px;border:none;outline:none; background-color:white; color:rgb(0, 136, 255);">
-                              <i style="font-size: 20px;" class="fa fa-pencil-square-o" aria-hidden="true"></i>
-                            </button>
-                          </td>
-                          <td style="width: 5%;">
-                              <button type="button" style="padding: 5px; border-radius:5px;border:none;outline:none; background-color:white; color:rgb(255, 0, 0);">
-                                <i style="font-size: 20px;" class="fa fa-trash" aria-hidden="true"></i>
-                              </button>
-                          </td>
-                        </tr>
+                      <?php 
+                        include __DIR__ . '/../../../connection.php';
+                        $sql = "SELECT name, price FROM menu_items WHERE category='Chat'";
+                        $rice_cat_data = mysqli_query($conn, $sql);
+                        $rice_row = mysqli_num_rows($rice_cat_data);
+                        // echo $income_row;
+                        if($rice_row>0){
+                          $counter=1;
+                          while ($rice_row_no = mysqli_fetch_assoc($rice_cat_data)){
+                         echo '<tr style="padding: 5px 5px !important">';
+                         echo '  <td>' . $counter++ . '</td>';
+                         echo '  <td>'.$rice_row_no['name'].'</td>';
+                         echo '  <td>'.$rice_row_no['price'].'</td>';
+                         echo '  <td style="width: 5%;">';
+                         echo '    <button type="button" style="padding: 5px; border-radius:5px;border:none;outline:none; background-color:white; color:rgb(0, 136, 255);">';
+                         echo '      <i style="font-size: 20px;" class="fa fa-pencil-square-o" aria-hidden="true"></i>';
+                         echo '    </button>';
+                         echo '  </td>';
+                         echo '  <td style="width: 5%;">';
+                         echo '    <button type="button" style="padding: 5px; border-radius:5px;border:none;outline:none; background-color:white; color:rgb(255, 0, 0);">';
+                         echo '      <i style="font-size: 20px;" class="fa fa-trash" aria-hidden="true"></i>';
+                         echo '    </button>';
+                         echo '  </td>';
+                         echo '</tr>';
+                        }
+                        }
+                        else{
+                            echo '  <td style="padding:10px 0; text-align:center; font-size:16px" colspan=5>';
+                             echo ' Category is empty, please add menu items ! ';
+                             echo '  </td>';
+                        }
+                      ?>
                       </tbody>
                     </table>
                   </div>
@@ -640,7 +782,7 @@
           </div>
         </div>
         <!-- content-wrapper ends -->
-        <!-- partial:../../partials/_footer.html -->
+        <!-- partial:../../partials/_footer.php -->
         <footer class="footer">
           <div class="d-sm-flex justify-content-center justify-content-sm-between">
             <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © <a href="https://www.bootstrapdash.com/" target="_blank">bootstrapdash.com </a>2021</span>
@@ -668,6 +810,7 @@
   <!-- endinject -->
   <!-- Custom js for this page-->
   <!-- End custom js for this page-->
+  <script src="../../js/file-upload.js"></script>
 </body>
 
 </html>
