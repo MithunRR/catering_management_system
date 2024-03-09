@@ -125,7 +125,7 @@ $user_data = check_login($conn);
                         Lorem ipsum dolor sit amet consectetur adipisicing elit. Non,
                         quae.
                     </p>
-                    <p class="food-price">Price: &#8377; 250</p>
+                    <p class="food-price"><a href="">View More</a></p>
                 </div>
             </div>
 
@@ -134,12 +134,12 @@ $user_data = check_login($conn);
                     <img src="assset\images\cust_index\menu2.jpg" alt="error" />
                 </div>
                 <div class="food-description">
-                    <h2 class="food-titile">Food Menu Item 2</h2>
+                    <h2 class="food-titile">South Indian</h2>
                     <p>
                         Lorem ipsum dolor sit amet consectetur adipisicing elit. Non,
                         quae.
                     </p>
-                    <p class="food-price">Price: &#8377; 250</p>
+                    <p class="food-price"><a href="">View More</a></p>
                 </div>
             </div>
             <div class="food-menu-item">
@@ -147,12 +147,12 @@ $user_data = check_login($conn);
                     <img src="assset\images\cust_index\menu3.jpg" alt="" />
                 </div>
                 <div class="food-description">
-                    <h2 class="food-titile">Food Menu Item 3</h2>
+                    <h2 class="food-titile">Chinese</h2>
                     <p>
                         Lorem ipsum dolor sit amet consectetur adipisicing elit. Non,
                         quae.
                     </p>
-                    <p class="food-price">Price: &#8377; 250</p>
+                    <p class="food-price"><a href="">View More</a></p>
                 </div>
             </div>
             <div class="food-menu-item">
@@ -165,7 +165,7 @@ $user_data = check_login($conn);
                         Lorem ipsum dolor sit amet consectetur adipisicing elit. Non,
                         quae.
                     </p>
-                    <p class="food-price">Price: &#8377; 250</p>
+                    <p class="food-price"><a href="">View More</a></p>
                 </div>
             </div>
             <div class="food-menu-item">
@@ -178,7 +178,7 @@ $user_data = check_login($conn);
                         Lorem ipsum dolor sit amet consectetur adipisicing elit. Non,
                         quae.
                     </p>
-                    <p class="food-price">Price: &#8377; 250</p>
+                    <p class="food-price"><a href="">View More</a></p>
                 </div>
             </div>
             <div class="food-menu-item">
@@ -191,73 +191,8 @@ $user_data = check_login($conn);
                         Lorem ipsum dolor sit amet consectetur adipisicing elit. Non,
                         quae.
                     </p>
-                    <p class="food-price">Price: &#8377; 250</p>
+                    <p class="food-price"><a href="">View More</a></p>
                 </div>
-            </div>
-        </div>
-    </section>
-    <section id="testimonials">
-        <h2 class="testimonial-title">What Our Customers Say</h2>
-        <div class="testimonial-container container">
-            <div class="testimonial-box">
-                <div class="customer-detail">
-                    <div class="customer-photo">
-                        <img src="https://i.postimg.cc/5Nrw360Y/male-photo1.jpg" alt="" />
-                        <p class="customer-name">Ross Lee</p>
-                    </div>
-                </div>
-                <div class="star-rating">
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                </div>
-                <p class="testimonial-text">
-                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Impedit
-                    voluptas cupiditate aspernatur odit doloribus non.
-                </p>
-
-            </div>
-            <div class="testimonial-box">
-                <div class="customer-detail">
-                    <div class="customer-photo">
-                        <img src="https://i.postimg.cc/sxd2xCD2/female-photo1.jpg" alt="" />
-                        <p class="customer-name">Amelia Watson</p>
-                    </div>
-                </div>
-                <div class="star-rating">
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                </div>
-                <p class="testimonial-text">
-                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Impedit
-                    voluptas cupiditate aspernatur odit doloribus non.
-                </p>
-
-            </div>
-            <div class="testimonial-box">
-                <div class="customer-detail">
-                    <div class="customer-photo">
-                        <img src="https://i.postimg.cc/fy90qvkV/male-photo3.jpg" alt="" />
-                        <p class="customer-name">Ben Roy</p>
-                    </div>
-                </div>
-                <div class="star-rating">
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                </div>
-                <p class="testimonial-text">
-                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Impedit
-                    voluptas cupiditate aspernatur odit doloribus non.
-                </p>
-
             </div>
         </div>
     </section>
@@ -298,7 +233,7 @@ $user_data = check_login($conn);
         </div>
     </section>
     <footer id="footer">
-        <h2>Restraunt &copy; all rights reserved</h2>
+        <h2>Zaika &copy; all rights reserved</h2>
     </footer>
     <!-- .................../ JS Code for smooth scrolling /...................... -->
 
