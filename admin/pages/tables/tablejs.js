@@ -16,22 +16,6 @@ function addItemFormHide() {
   addIFCB.style.display = 'none';
 }
 
-// function updateItemForm() {
-//   let addIF = document.getElementById('updateItemForm');
-//   let addIFB = document.getElementById('addItemFormBtn');
-//   let addIFCB = document.getElementById('addItemFormCsBtn');
-//   addIF.style.display = 'block';
-//   addIFB.style.display = 'none';
-//   addIFCB.style.display = 'none';
-// }
-
-// function cancelUpdateForm() {
-//   let addIF = document.getElementById('updateItemForm');
-//   let addIFB = document.getElementById('addItemFormBtn');
-//   addIF.style.display = 'none';
-//   addIFB.style.display = 'block';
-// }
-
 function scrollToTop() {
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }

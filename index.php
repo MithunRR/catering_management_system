@@ -120,12 +120,12 @@ $user_data = check_login($conn);
                     <img src="assset\images\cust_index\menu1.jpg" alt="" />
                 </div>
                 <div class="food-description">
-                    <h2 class="food-titile">Food Menu Item 1</h2>
+                    <h2 class="food-titile">North Indian</h2>
                     <p>
                         Lorem ipsum dolor sit amet consectetur adipisicing elit. Non,
                         quae.
                     </p>
-                    <p class="food-price"><a href="">View More</a></p>
+                    <p class="food-price"><a href="/catering/north_cat.php">View More</a></p>
                 </div>
             </div>
 
@@ -139,7 +139,7 @@ $user_data = check_login($conn);
                         Lorem ipsum dolor sit amet consectetur adipisicing elit. Non,
                         quae.
                     </p>
-                    <p class="food-price"><a href="">View More</a></p>
+                    <p class="food-price"><a href="/catering/south_cat.php">View More</a></p>
                 </div>
             </div>
             <div class="food-menu-item">
@@ -173,7 +173,7 @@ $user_data = check_login($conn);
                     <img src="assset\images\cust_index\menu5.jpg" alt="" />
                 </div>
                 <div class="food-description">
-                    <h2 class="food-titile">Food Menu Item 5</h2>
+                    <h2 class="food-titile">Mocktail</h2>
                     <p>
                         Lorem ipsum dolor sit amet consectetur adipisicing elit. Non,
                         quae.
@@ -219,7 +219,7 @@ $user_data = check_login($conn);
     <section id="contact">
         <div class="contact-container container">
             <div class="contact-img">
-                <img src="https://i.postimg.cc/1XvYM67V/restraunt2.jpg" alt="" />
+                <img src="assset\images\cust_index\restraunt2.jpg" alt="" />
             </div>
             <div class="form-container">
                 <h2>Contact Us</h2>
