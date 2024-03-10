@@ -22,7 +22,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["item_name"])) {
         echo "Error: " . $sql . "<br>" . $conn->error;
     }
 
-    header("location: basic-table.php");
+    header("location: north-indian.php");
 
     $conn->close();
 }
@@ -69,7 +69,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["update_name"])) {
 
   $conn->close();
 
-  header("location: basic-table.php");
+  header("location: north-indian.php");
   exit();
 }
 
@@ -80,7 +80,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["update_name"])) {
   
 //   $delete_query = "DELETE FROM menu_items WHERE id = '$item_id'";
 //   }
-//   // header("location: basic-table.php");
+//   // header("location: north-indian.php");
   if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $item_id = mysqli_real_escape_string($conn, $_POST["item_id"]);
 
@@ -92,7 +92,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["update_name"])) {
     } else {
         echo "Error deleting record: " . mysqli_error($conn);
     }
-    header("location: basic-table.php");
+    header("location: north-indian.php");
 }
 ?>
 
@@ -276,7 +276,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["update_name"])) {
           </li>
           <li class="nav-item">
             <a class="nav-link" href="../../pages/tables/basic-table.php">
-              <i class="ti-view-list-alt menu-icon fa fa-star" aria-hidden="true"></i>
+            <i class="ti-view-list-alt menu-icon fa fa-star" aria-hidden="true"></i>
               <span class="menu-title">Premium Menu</span>
             </a>
           </li>
@@ -305,7 +305,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["update_name"])) {
             <div class="col-md-12 grid-margin">
               <div class="d-flex justify-content-between align-items-center">
                 <div>
-                  <h4 class="font-weight-bold mb-0">Menu Items | Premium</h4>
+                  <h4 class="font-weight-bold mb-0">Menu Items | North Indian</h4>
                 </div>
                 <div>
                     <button type="button" style="display: block;" id="addItemFormBtn" onclick="addItemForm()" class="btn btn-primary btn-icon-text btn-rounded">
@@ -324,7 +324,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["update_name"])) {
             <div class="card">
               <div class="card-body">
 
-                <form class="forms-sample" action="basic-table.php" method="post" enctype="multipart/form-data">
+                <form class="forms-sample" action="north-indian.php" method="post" enctype="multipart/form-data">
                   <div class="form-group">
                     <label for="exampleInputName1">Item Name</label>
                     <input required style="height: 10px !important;" type="text" class="form-control" id="item_name" name="item_name" placeholder="Item Name">
@@ -391,7 +391,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["update_name"])) {
                       <div class="card">
                           <div class="card-body">
                               <button style="float:right; background-color:red; color:white; border:1px solid red; width:5%;" onclick="cancelUpdateForm('.$item_id.')"> X </button>
-                              <form class="forms-sample" action="basic-table.php" method="post" enctype="multipart/form-data">
+                              <form class="forms-sample" action="north-indian.php" method="post" enctype="multipart/form-data">
                                   Update Item
                                   <div class="form-group">
                                       <label for="exampleInputName1">Item Name</label>
@@ -491,7 +491,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["update_name"])) {
                           echo '    </button>';
                           echo '  </td>';
                           echo '  <td style="width: 5%;">';
-                          echo '    <form method="post" action="basic-table.php">';
+                          echo '    <form method="post" action="north-indian.php">';
                           echo '      <input type="hidden" name="item_id" value="' . $item_id . '">';
                           echo '      <button type="submit" onclick="return confirm(\'Are you sure you want to delete this item?\')" style="padding: 5px; border-radius:5px;border:none;outline:none; background-color:white; color:rgb(255, 0, 0);">';
                           echo '        <i style="font-size: 20px;" class="fa fa-trash" aria-hidden="true"></i>';
@@ -561,7 +561,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["update_name"])) {
                           echo '    </button>';
                           echo '  </td>';
                           echo '  <td style="width: 5%;">';
-                          echo '    <form method="post" action="basic-table.php">';
+                          echo '    <form method="post" action="north-indian.php">';
                           echo '      <input type="hidden" name="item_id" value="' . $item_id . '">';
                           echo '      <button type="submit" onclick="return confirm(\'Are you sure you want to delete this item?\')" style="padding: 5px; border-radius:5px;border:none;outline:none; background-color:white; color:rgb(255, 0, 0);">';
                           echo '        <i style="font-size: 20px;" class="fa fa-trash" aria-hidden="true"></i>';
@@ -631,7 +631,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["update_name"])) {
                           echo '    </button>';
                           echo '  </td>';
                           echo '  <td style="width: 5%;">';
-                          echo '    <form method="post" action="basic-table.php">';
+                          echo '    <form method="post" action="north-indian.php">';
                           echo '      <input type="hidden" name="item_id" value="' . $item_id . '">';
                           echo '      <button type="submit" onclick="return confirm(\'Are you sure you want to delete this item?\')" style="padding: 5px; border-radius:5px;border:none;outline:none; background-color:white; color:rgb(255, 0, 0);">';
                           echo '        <i style="font-size: 20px;" class="fa fa-trash" aria-hidden="true"></i>';
@@ -701,7 +701,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["update_name"])) {
                           echo '    </button>';
                           echo '  </td>';
                           echo '  <td style="width: 5%;">';
-                          echo '    <form method="post" action="basic-table.php">';
+                          echo '    <form method="post" action="north-indian.php">';
                           echo '      <input type="hidden" name="item_id" value="' . $item_id . '">';
                           echo '      <button type="submit" onclick="return confirm(\'Are you sure you want to delete this item?\')" style="padding: 5px; border-radius:5px;border:none;outline:none; background-color:white; color:rgb(255, 0, 0);">';
                           echo '        <i style="font-size: 20px;" class="fa fa-trash" aria-hidden="true"></i>';
@@ -771,7 +771,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["update_name"])) {
                           echo '    </button>';
                           echo '  </td>';
                           echo '  <td style="width: 5%;">';
-                          echo '    <form method="post" action="basic-table.php">';
+                          echo '    <form method="post" action="north-indian.php">';
                           echo '      <input type="hidden" name="item_id" value="' . $item_id . '">';
                           echo '      <button type="submit" onclick="return confirm(\'Are you sure you want to delete this item?\')" style="padding: 5px; border-radius:5px;border:none;outline:none; background-color:white; color:rgb(255, 0, 0);">';
                           echo '        <i style="font-size: 20px;" class="fa fa-trash" aria-hidden="true"></i>';
@@ -841,7 +841,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["update_name"])) {
                           echo '    </button>';
                           echo '  </td>';
                           echo '  <td style="width: 5%;">';
-                          echo '    <form method="post" action="basic-table.php">';
+                          echo '    <form method="post" action="north-indian.php">';
                           echo '      <input type="hidden" name="item_id" value="' . $item_id . '">';
                           echo '      <button type="submit" onclick="return confirm(\'Are you sure you want to delete this item?\')" style="padding: 5px; border-radius:5px;border:none;outline:none; background-color:white; color:rgb(255, 0, 0);">';
                           echo '        <i style="font-size: 20px;" class="fa fa-trash" aria-hidden="true"></i>';
@@ -911,7 +911,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["update_name"])) {
                           echo '    </button>';
                           echo '  </td>';
                           echo '  <td style="width: 5%;">';
-                          echo '    <form method="post" action="basic-table.php">';
+                          echo '    <form method="post" action="north-indian.php">';
                           echo '      <input type="hidden" name="item_id" value="' . $item_id . '">';
                           echo '      <button type="submit" onclick="return confirm(\'Are you sure you want to delete this item?\')" style="padding: 5px; border-radius:5px;border:none;outline:none; background-color:white; color:rgb(255, 0, 0);">';
                           echo '        <i style="font-size: 20px;" class="fa fa-trash" aria-hidden="true"></i>';
@@ -960,7 +960,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["update_name"])) {
   <script src="../../js/hoverable-collapse.js"></script>
   <script src="../../js/template.js"></script>
   <script src="../../js/todolist.js"></script>
-  <script src="tablejs.js"></script>
+  <script src="../tables/tablejs.js"></script>
   <!-- endinject -->
   <!-- Custom js for this page-->
   <!-- End custom js for this page-->

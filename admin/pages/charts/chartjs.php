@@ -188,11 +188,11 @@
             </a>
             <div class="collapse" id="auth">
               <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="../../pages/samples/login.php"> Login </a></li>
-                <li class="nav-item"> <a class="nav-link" href="../../pages/samples/login-2.php"> Login 2 </a></li>
-                <li class="nav-item"> <a class="nav-link" href="../../pages/samples/register.php"> Register </a></li>
-                <li class="nav-item"> <a class="nav-link" href="../../pages/samples/register-2.php"> Register 2 </a></li>
-                <li class="nav-item"> <a class="nav-link" href="../../pages/samples/lock-screen.php"> Lockscreen </a></li>
+                <li class="nav-item"> <a class="nav-link" href="../../pages/samples/login.php"> North Indian </a></li>
+                <li class="nav-item"> <a class="nav-link" href="../../pages/samples/login-2.php"> South Indian </a></li>
+                <li class="nav-item"> <a class="nav-link" href="../../pages/samples/register.php"> Chinese </a></li>
+                <li class="nav-item"> <a class="nav-link" href="../../pages/samples/register-2.php"> Italian </a></li>
+                <li class="nav-item"> <a class="nav-link" href="../../pages/samples/lock-screen.php"> Mocktail </a></li>
               </ul>
             </div>
           </li>

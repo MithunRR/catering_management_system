@@ -16,6 +16,9 @@
   <link rel="stylesheet" href="css/style.css">
   <!-- endinject -->
   <link rel="shortcut icon" href="images/favicon.png" />
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
 </head>
 <body>
   <div class="container-scroller">
@@ -178,23 +181,23 @@
           </li>
           <li class="nav-item">
             <a class="nav-link" href="pages/tables/basic-table.php">
-              <i class="ti-view-list-alt menu-icon"></i>
-              <span class="menu-title">Menu</span>
+            <i class="ti-view-list-alt menu-icon fa fa-star" aria-hidden="true"></i>
+              <span class="menu-title">Premium Menu</span>
             </a>
           </li>
           <li class="nav-item">
             <a class="nav-link" data-bs-toggle="collapse" href="#auth" aria-expanded="false" aria-controls="auth">
               <i class="ti-user menu-icon"></i>
-              <span class="menu-title">User Pages</span>
+              <span class="menu-title">Normal Menu</span>
               <i class="menu-arrow"></i>
             </a>
             <div class="collapse" id="auth">
               <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="pages/samples/login.php"> Login </a></li>
-                <li class="nav-item"> <a class="nav-link" href="pages/samples/login-2.php"> Login 2 </a></li>
-                <li class="nav-item"> <a class="nav-link" href="pages/samples/register.php"> Register </a></li>
-                <li class="nav-item"> <a class="nav-link" href="pages/samples/register-2.php"> Register 2 </a></li>
-                <li class="nav-item"> <a class="nav-link" href="pages/samples/lock-screen.php"> Lockscreen </a></li>
+                <li class="nav-item"> <a class="nav-link" href="pages/samples/north-indian.php"> North Indian </a></li>
+                <li class="nav-item"> <a class="nav-link" href="pages/samples/south-indian.php"> South Indian </a></li>
+                <li class="nav-item"> <a class="nav-link" href="pages/samples/chinese.php"> Chinesse </a></li>
+                <li class="nav-item"> <a class="nav-link" href="pages/samples/italian.php"> Italian </a></li>
+                <li class="nav-item"> <a class="nav-link" href="pages/samples/mocktail.php"> Mocktail </a></li>
               </ul>
             </div>
           </li>
