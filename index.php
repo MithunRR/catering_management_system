@@ -35,7 +35,8 @@ $user_data = check_login($conn);
                 <li><a href="#food">Trending</a></li>
                 <li><a href="#food-menu">Menu</a></li>
                 <li><a href="#contact">Contact</a></li>
-                <li><a href="#contact">Bookings</a></li>
+                <li><a href="orders.php">Bookings</a></li>
+                <li><a href="booking.php">Cart</a></li>
                 <?php
                 if ($user_data) {
                     echo '<li>Hi, ' . $user_data['f_name'] . '.</li>';

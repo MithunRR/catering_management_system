@@ -130,7 +130,7 @@ $user_data = check_login($conn);
     </nav>
     
     <?php
-    echo '<h1 style="padding-top: 52px !important; text-align: center">Dal</h1>';
+    echo '<h1 style="padding-top: 52px !important; text-align: center">Dosa</h1>';
     echo '<div class="product-container">';
     $result = $conn->query("SELECT * FROM menu_south WHERE category='Dosa'");
     if ($result->num_rows > 0) {
