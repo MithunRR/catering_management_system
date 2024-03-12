@@ -167,39 +167,16 @@
             </a>
           </li>
           <li class="nav-item">
-          <li class="nav-item">
-            <a class="nav-link" href="pages/forms/basic_elements.php">
-              <i class="ti-layout-list-post menu-icon"></i>
-              <span class="menu-title">Form elements</span>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="pages/charts/chartjs.php">
-              <i class="ti-pie-chart menu-icon"></i>
-              <span class="menu-title">Charts</span>
-            </a>
-          </li>
-          <li class="nav-item">
             <a class="nav-link" href="pages/tables/basic-table.php">
             <i class="ti-view-list-alt menu-icon fa fa-star" aria-hidden="true"></i>
               <span class="menu-title">Premium Menu</span>
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" data-bs-toggle="collapse" href="#auth" aria-expanded="false" aria-controls="auth">
-              <i class="ti-user menu-icon"></i>
+          <a class="nav-link" href="pages/tables/table-southi.php">
+            <i class="ti-view-list-alt menu-icon fa fa-cutlery" aria-hidden="true"></i>
               <span class="menu-title">Normal Menu</span>
-              <i class="menu-arrow"></i>
             </a>
-            <div class="collapse" id="auth">
-              <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="pages/samples/north-indian.php"> North Indian </a></li>
-                <li class="nav-item"> <a class="nav-link" href="pages/samples/south-indian.php"> South Indian </a></li>
-                <li class="nav-item"> <a class="nav-link" href="pages/samples/chinese.php"> Chinesse </a></li>
-                <li class="nav-item"> <a class="nav-link" href="pages/samples/italian.php"> Italian </a></li>
-                <li class="nav-item"> <a class="nav-link" href="pages/samples/mocktail.php"> Mocktail </a></li>
-              </ul>
-            </div>
           </li>
         </ul>
       </nav>

@@ -130,34 +130,9 @@ $user_data = check_login($conn);
     </nav>
     
     <?php
-    echo '<h1 style="padding-top: 52px !important; text-align: center">Dosa</h1>';
+    echo '<h1 style="padding-top: 52px !important; text-align: center">Main Course</h1>';
     echo '<div class="product-container">';
-    $result = $conn->query("SELECT * FROM menu_south WHERE category='Dosa'");
-    if ($result->num_rows > 0) {
-        while ($row = $result->fetch_assoc()) {
-            echo '<div class="product">';
-            if ($row['img']) {
-                $imgSrc = 'admin/pages/tables/' . $row['img'];
-                echo '<img src="' . $imgSrc . '" alt="' . $row['name'] . '">';
-            }
-            echo '<div class="product-info">';
-            echo '<h2>' . $row['name'] . '</h2>';
-            echo '<p class="price">$' . $row['price'] . '</p>';
-            // echo '<p class="description">' . $row['descr'] . '</p>';
-            echo '<button>Add To Cart</button>';
-            echo '</div>';
-            echo '</div>';
-        }
-    } else {
-        echo 'No products found.';
-    }
-    // $conn->close();
-    echo '</div>';
-
-
-    echo '<h1 style="padding-top: 52px !important; text-align: center">Idli</h1>';
-    echo '<div class="product-container">';
-    $result = $conn->query("SELECT * FROM menu_south WHERE category='Idli'");
+    $result = $conn->query("SELECT * FROM menu_items WHERE category='Main Course'");
     if ($result->num_rows > 0) {
         while ($row = $result->fetch_assoc()) {
             echo '<div class="product">';
@@ -181,69 +156,6 @@ $user_data = check_login($conn);
     $conn->close();
     ?>
 
-
-
-
-    <h1 style="padding-top:52px !important; text-align:center">Category</h1>
-    <div class="product-container">
-        <div class="product">
-            <img src="assset/images/cust_index/food1.jpg" alt="Product 1">
-            <div class="product-info">
-                <h2>Product Name 1</h2>
-                <p class="price">$99.99</p>
-                <!-- <p class="description"></p> -->
-                <button>Add To Cart</button>                    
-            </div>
-        </div>
-
-        <div class="product">
-            <img src="assset/images/cust_index/food1.jpg" alt="Product 3">
-            <div class="product-info">
-                <h2>Product Name 3</h2>
-                <p class="price">$79.99</p>
-                <!-- <p class="description"></p> -->
-            </div>
-        </div>
-
-        <div class="product">
-            <img src="product3.jpg" alt="Product 3">
-            <div class="product-info">
-                <h2>Product Name 3</h2>
-                <p class="price">$79.99</p>
-                <!-- <p class="description"></p> -->
-            </div>
-        </div>
-
-        <div class="product">
-            <img src="product3.jpg" alt="Product 3">
-            <div class="product-info">
-                <h2>Product Name 3</h2>
-                <p class="price">$79.99</p>
-                <!-- <p class="description"></p> -->
-            </div>
-        </div>
-
-        <div class="product">
-            <img src="product3.jpg" alt="Product 3">
-            <div class="product-info">
-                <h2>Product Name 3</h2>
-                <p class="price">$79.99</p>
-                <!-- <p class="description"></p> -->
-            </div>
-        </div>
-
-        <div class="product">
-            <img src="product3.jpg" alt="Product 3">
-            <div class="product-info">
-                <h2>Product Name 3</h2>
-                <p class="price">$79.99</p>
-                <!-- <p class="description"></p> -->
-            </div>
-        </div>
-
-        <!-- Repeat the structure for additional products -->
-
-    </div>
     <footer id="footer">
         <h2>Zaika &copy; all rights reserved</h2>
     </footer>

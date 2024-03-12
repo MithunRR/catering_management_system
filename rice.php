@@ -130,9 +130,9 @@ $user_data = check_login($conn);
     </nav>
     
     <?php
-    echo '<h1 style="padding-top: 52px !important; text-align: center">Dal</h1>';
+    echo '<h1 style="padding-top: 52px !important; text-align: center">Rice</h1>';
     echo '<div class="product-container">';
-    $result = $conn->query("SELECT * FROM menu_items WHERE category='Dal'");
+    $result = $conn->query("SELECT * FROM menu_items WHERE category='Rice'");
     if ($result->num_rows > 0) {
         while ($row = $result->fetch_assoc()) {
             echo '<div class="product">';
@@ -154,68 +154,6 @@ $user_data = check_login($conn);
     $conn->close();
     echo '</div>';
     ?>
-
-
-
-
-    <h1 style="padding-top:52px !important; text-align:center">Category</h1>
-    <div class="product-container">
-        <div class="product">
-            <img src="assset/images/cust_index/food1.jpg" alt="Product 1">
-            <div class="product-info">
-                <h2>Product Name 1</h2>
-                <p class="price">$99.99</p>
-                <!-- <p class="description"></p> -->
-                <button>Add To Cart</button>                    
-            </div>
-        </div>
-
-        <div class="product">
-            <img src="assset/images/cust_index/food1.jpg" alt="Product 3">
-            <div class="product-info">
-                <h2>Product Name 3</h2>
-                <p class="price">$79.99</p>
-                <!-- <p class="description"></p> -->
-            </div>
-        </div>
-
-        <div class="product">
-            <img src="product3.jpg" alt="Product 3">
-            <div class="product-info">
-                <h2>Product Name 3</h2>
-                <p class="price">$79.99</p>
-                <!-- <p class="description"></p> -->
-            </div>
-        </div>
-
-        <div class="product">
-            <img src="product3.jpg" alt="Product 3">
-            <div class="product-info">
-                <h2>Product Name 3</h2>
-                <p class="price">$79.99</p>
-                <!-- <p class="description"></p> -->
-            </div>
-        </div>
-
-        <div class="product">
-            <img src="product3.jpg" alt="Product 3">
-            <div class="product-info">
-                <h2>Product Name 3</h2>
-                <p class="price">$79.99</p>
-                <!-- <p class="description"></p> -->
-            </div>
-        </div>
-
-        <div class="product">
-            <img src="product3.jpg" alt="Product 3">
-            <div class="product-info">
-                <h2>Product Name 3</h2>
-                <p class="price">$79.99</p>
-                <!-- <p class="description"></p> -->
-            </div>
-        </div>
-
-        <!-- Repeat the structure for additional products -->
 
     </div>
     <footer id="footer">

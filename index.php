@@ -118,76 +118,102 @@ $user_data = check_login($conn);
         <div class="food-menu-container container">
             <div class="food-menu-item">
                 <div class="food-img">
-                    <img src="assset\images\cust_index\menu1.jpg" alt="" />
+                    <img style="border:2px solid black;" src="assset/images/menu/jeera_rice.jpeg" alt="" />
                 </div>
                 <div class="food-description">
-                    <h2 class="food-titile">North Indian</h2>
+                    <h2 class="food-titile">Rice</h2>
                     <p>
                         Lorem ipsum dolor sit amet consectetur adipisicing elit. Non,
                         quae.
                     </p>
-                    <p class="food-price"><a href="/catering/north_cat.php">View More</a></p>
+                    <p class="food-price"><a href="/catering/rice.php">View More</a></p>
                 </div>
             </div>
 
             <div class="food-menu-item">
                 <div class="food-img">
-                    <img src="assset\images\cust_index\menu2.jpg" alt="error" />
+                    <img style="border:2px solid black;" src="assset/images/menu/dal.webp" alt="error" />
                 </div>
                 <div class="food-description">
-                    <h2 class="food-titile">South Indian</h2>
+                    <h2 class="food-titile">Dal</h2>
                     <p>
                         Lorem ipsum dolor sit amet consectetur adipisicing elit. Non,
                         quae.
                     </p>
-                    <p class="food-price"><a href="/catering/south_cat.php">View More</a></p>
+                    <p class="food-price"><a href="/catering/dal.php">View More</a></p>
                 </div>
             </div>
             <div class="food-menu-item">
                 <div class="food-img">
-                    <img src="assset\images\cust_index\menu3.jpg" alt="" />
+                    <img style="border:2px solid black;" src="assset/images/menu/naan.webp" alt="" />
                 </div>
                 <div class="food-description">
-                    <h2 class="food-titile">Chinese</h2>
+                    <h2 class="food-titile">Roti/Paratha/Bread</h2>
                     <p>
                         Lorem ipsum dolor sit amet consectetur adipisicing elit. Non,
                         quae.
                     </p>
-                    <p class="food-price"><a href="">View More</a></p>
+                    <p class="food-price"><a href="/catering/roti.php">View More</a></p>
                 </div>
             </div>
             <div class="food-menu-item">
                 <div class="food-img">
-                    <img src="assset\images\cust_index\menu4.jpg" alt="" />
+                    <img style="border:2px solid black;" src="assset/images/menu/mainc.jpg" alt="" />
                 </div>
                 <div class="food-description">
-                    <h2 class="food-titile">Food Menu Item 4</h2>
+                    <h2 class="food-titile">Main Course</h2>
                     <p>
                         Lorem ipsum dolor sit amet consectetur adipisicing elit. Non,
                         quae.
                     </p>
-                    <p class="food-price"><a href="">View More</a></p>
+                    <p class="food-price"><a href="/catering/mainc.php">View More</a></p>
                 </div>
             </div>
             <div class="food-menu-item">
                 <div class="food-img">
-                    <img src="assset\images\cust_index\menu5.jpg" alt="" />
+                    <img style="border:2px solid black;" src="assset/images/menu/curries.jpg" alt="" />
                 </div>
                 <div class="food-description">
-                    <h2 class="food-titile">Mocktail</h2>
+                    <h2 class="food-titile">Curries</h2>
                     <p>
                         Lorem ipsum dolor sit amet consectetur adipisicing elit. Non,
                         quae.
                     </p>
-                    <p class="food-price"><a href="">View More</a></p>
+                    <p class="food-price"><a href="/catering/curries.php">View More</a></p>
                 </div>
             </div>
             <div class="food-menu-item">
                 <div class="food-img">
-                    <img src="assset\images\cust_index\menu6.jpg" alt="" />
+                    <img style="border:2px solid black;" src="assset/images/menu/sweet.jpg" alt="" />
                 </div>
                 <div class="food-description">
-                    <h2 class="food-titile">Food Menu Item 6</h2>
+                    <h2 class="food-titile">Sweet</h2>
+                    <p>
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Non,
+                        quae.
+                    </p>
+                    <p class="food-price"><a href="/catering/sweet.php">View More</a></p>
+                </div>
+            </div>
+            <div class="food-menu-item">
+                <div class="food-img">
+                    <img style="border:2px solid black;" src="assset/images/menu/chaat.jpg" alt="" />
+                </div>
+                <div class="food-description">
+                    <h2 class="food-titile">Chaat</h2>
+                    <p>
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Non,
+                        quae.
+                    </p>
+                    <p class="food-price"><a href="/catering/chaat.php">View More</a></p>
+                </div>
+            </div>
+            <div class="food-menu-item">
+                <div class="food-img">
+                    <img style="border:2px solid black;" src="assset/images/menu/spec.jpg" alt="" />
+                </div>
+                <div class="food-description">
+                    <h2 class="food-titile">Special</h2>
                     <p>
                         Lorem ipsum dolor sit amet consectetur adipisicing elit. Non,
                         quae.
