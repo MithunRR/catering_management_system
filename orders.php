@@ -125,7 +125,7 @@ $order_details = array(
         </nav>
 
         <div class="order-details-container" style="margin-top:70px !important;">
-            <h2>Order Details</h2>
+            <h2>Order Details</h2> <p>Date:</p>
             <table>
                 <thead>
                     <tr>
@@ -147,19 +147,29 @@ $order_details = array(
 
                         echo "<tr>
                                 <td>$product_name</td>
-                                <td>$product_price</td>
+                                <td> &#8377;$product_price</td>
                                 <td>$quantity</td>
-                                <td>$total</td>
+                                <td> &#8377;$total</td>
                             </tr>";
                     }
                     ?>
                 </tbody>
-                <tfoot>
-                    <tr class="total-row">
-                        <td colspan="3">Total Amount</td>
-                        <td><?php echo $total_amount; ?></td>
-                    </tr>
-                </tfoot>
+                <tr style="border-bottom: 2px solid black" class="total-row">
+                    <td colspan="3">Total Amount</td>
+                    <td><?php echo '&#8377;'.$total_amount; ?></td>
+                </tr>
+                <tr style="width:100% !important;">
+                    <td>Name</td>
+                    <td>Mobile Number</td>
+                    <td>Address</td>
+                    <td>Plate Count</td>
+                </tr>
+                <tr stdle="width:100%">
+                    <td>Name</td>
+                    <td>Mobile Number</td>
+                    <td>Address</td>
+                    <td>Plate Count</td>
+                </tr>
             </table>
         </div>
 

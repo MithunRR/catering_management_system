@@ -178,6 +178,18 @@
               <span class="menu-title">Normal Menu</span>
             </a>
           </li>
+          <li class="nav-item">
+          <a class="nav-link" href="pages/tables/table-southi.php">
+            <i class="ti-view-list-alt menu-icon fa fa-cart-arrow-down" aria-hidden="true"></i>
+              <span class="menu-title">Orders</span>
+            </a>
+          </li>
+          <li class="nav-item">
+          <a class="nav-link" href="pages/tables/table-southi.php">
+            <i class="ti-view-list-alt menu-icon fa fa-commenting" aria-hidden="true"></i>
+              <span class="menu-title">Contacts</span>
+            </a>
+          </li>
         </ul>
       </nav>
       <!-- partial -->

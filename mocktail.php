@@ -156,7 +156,8 @@ if(isset($_POST['add_to_cart'])) {
                 <li><a href="#food">Trending</a></li>
                 <li><a href="#food-menu">Menu</a></li>
                 <li><a href="#contact">Contact</a></li>
-                <li><a href="#contact">Bookings</a></li>
+                <li><a href="orders.php">Bookings</a></li>
+                <li><a href="booking.php">Cart</a></li>
                 <?php
                 if ($user_data) {
                     echo '<li>Hi, ' . $user_data['f_name'] . '.</li>';
@@ -174,9 +175,9 @@ if(isset($_POST['add_to_cart'])) {
     
     <?php
 
-    echo '<h1 style="padding-top: 52px !important; text-align: center">Dal</h1>';
+    echo '<h1 style="padding-top: 52px !important; text-align: center">Mocktail</h1>';
     echo '<div class="product-container">';
-    $result = $conn->query("SELECT * FROM menu_items WHERE category='Dal'");
+    $result = $conn->query("SELECT * FROM menu_items WHERE category='Mocktail'");
     if ($result->num_rows > 0) {
         while ($row = $result->fetch_assoc()) {
             // Fetch product details from menu_items table
@@ -186,7 +187,7 @@ if(isset($_POST['add_to_cart'])) {
             echo '<form action="" method="post">';
             if ($row['img']) {
                 $imgSrc = 'admin/pages/tables/' . $row['img'];
-                echo '<img height="180px" width="100%" src="' . $imgSrc . '" alt="' . $productName . '">';
+                echo '<img  height="180px" width="100%" src="' . $imgSrc . '" alt="' . $productName . '">';
             }
             echo '<div class="product-info">';
             echo '<h2>' . $productName . '</h2>';
@@ -201,7 +202,7 @@ if(isset($_POST['add_to_cart'])) {
             echo '</div>';
         }
     } else {
-        echo 'No products found.';
+        echo '<h1 style="padding:20px">This Menu Options Will Be Available Soon...!</h1>';
     }
     $conn->close();
     echo '</div>';

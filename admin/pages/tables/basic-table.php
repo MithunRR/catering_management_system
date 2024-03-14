@@ -378,13 +378,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["update_name"])) {
                                   <div class="form-group">
                                       <label for="exampleSelectGender">Category</label>
                                       <select required class="form-control" id="category" name="category">
+                                          <option style="height: 10px !important;">Sabji</option>
+                                          <option style="height: 10px !important;">Roti/Naan</option>
                                           <option style="height: 10px !important;">Rice</option>
                                           <option style="height: 10px !important;">Dal</option>
-                                          <option style="height: 10px !important;">Roti/Paratha/Bread</option>
-                                          <option style="height: 10px !important;">Main Course</option>
-                                          <option style="height: 10px !important;">Curries</option>
-                                          <option style="height: 10px !important;">Sweet</option>
-                                          <option style="height: 10px !important;">Chat</option>
+                                          <option style="height: 10px !important;">South Indian</option>
+                                          <option style="height: 10px !important;">Pizza</option>
+                                          <option style="height: 10px !important;">Pasta</option>
+                                          <option style="height: 10px !important;">Bread</option>
+                                          <option style="height: 10px !important;">Chinese</option>
+                                          <option style="height: 10px !important;">Desserts</option>
+                                          <option style="height: 10px !important;">Ice Creame</option>
+                                          <option style="height: 10px !important;">Mocktail</option>
+                                          <option style="height: 10px !important;">Starter</option>
+                                          <option style="height: 10px !important;">Chaat</option>
                                       </select>
                                   </div>';
                                   // <div class="form-group">

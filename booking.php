@@ -6,6 +6,103 @@ include("function.php");
 
 $user_data = check_login($conn);
 
+if (!$user_data) {
+    header("Location: login.php");
+    exit();
+}
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+  if (isset($_POST['place_order'])) {
+      // Retrieve customer details from the form
+      $name = $_POST['name'];
+      $mo_no = $_POST['mo_no'];
+      $address = $_POST['address'];
+      $count = $_POST['count'];
+      $order_date = $_POST['date'];
+      
+        // Insert customer details into 'customers' table
+        $sql_insert_customer = "INSERT INTO customers (name, mo_no, address, count, date, user_id, order_date) 
+                                VALUES (?, ?, ?, ?, ?, ?, NOW())";
+        $stmt_insert_customer = $conn->prepare($sql_insert_customer);
+        $stmt_insert_customer->bind_param("sssssi", $name, $mo_no, $address, $count, $order_date, $user_data['id']);
+        $stmt_insert_customer->execute();
+
+        // Get the last inserted customer ID
+        $customer_id = $conn->insert_id;
+
+        // Retrieve cart items from the database
+        $sql_cart = "SELECT * FROM cart WHERE user_id = ?";
+        $stmt_cart = $conn->prepare($sql_cart);
+        $stmt_cart->bind_param("i", $user_data['id']);
+        $stmt_cart->execute();
+        $result_cart = $stmt_cart->get_result();
+
+        // Insert each cart item into 'orders' table
+        while ($row_cart = $result_cart->fetch_assoc()) {
+            $product_name = $row_cart['name'];
+            $price = $row_cart['price'];
+            $quantity = $row_cart['quantity'];
+
+            // Insert each order with the customer ID
+            $sql_insert_order = "INSERT INTO orders (product_name, price, quantity, user_id, customer_id) 
+                                VALUES (?, ?, ?, ?, ?)";
+            $stmt_insert_order = $conn->prepare($sql_insert_order);
+            $stmt_insert_order->bind_param("ssdii", $product_name, $price, $quantity, $user_data['id'], $customer_id);
+            $stmt_insert_order->execute();
+        }
+
+      // Clear the cart after placing the order
+      $sql_clear_cart = "DELETE FROM cart WHERE user_id = ?";
+      $stmt_clear_cart = $conn->prepare($sql_clear_cart);
+      $stmt_clear_cart->bind_param("i", $user_data['id']);
+      $stmt_clear_cart->execute();
+
+      // Redirect to a success page or display a success message
+      header("Location: index.php");
+      exit();
+  }
+}
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if (isset($_POST['decrease'])) {
+        $cart_id = $_POST['decrease'];
+        updateQuantity($conn, $cart_id, -1);
+    }
+    if (isset($_POST['increase'])) {
+        $cart_id = $_POST['increase'];
+        updateQuantity($conn, $cart_id, 1);
+    }
+    if (isset($_POST['delete'])) {
+        $cart_id = $_POST['delete'];
+        deleteCartItem($conn, $cart_id);
+    }
+}
+
+function updateQuantity($conn, $cart_id, $change) {
+    $sql_select = "SELECT quantity FROM cart WHERE id = ?";
+    $stmt_select = $conn->prepare($sql_select);
+    $stmt_select->bind_param("i", $cart_id);
+    $stmt_select->execute();
+    $result = $stmt_select->get_result();
+    if ($result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        $quantity = $row['quantity'] + $change;
+        if ($quantity < 1) {
+            $quantity = 1;
+        }
+        $sql_update = "UPDATE cart SET quantity = ? WHERE id = ?";
+        $stmt_update = $conn->prepare($sql_update);
+        $stmt_update->bind_param("ii", $quantity, $cart_id);
+        $stmt_update->execute();
+    }
+}
+
+function deleteCartItem($conn, $cart_id) {
+    $sql_delete = "DELETE FROM cart WHERE id = ?";
+    $stmt_delete = $conn->prepare($sql_delete);
+    $stmt_delete->bind_param("i", $cart_id);
+    $stmt_delete->execute();
+}
 ?>
 
 <!DOCTYPE html>
@@ -57,69 +154,70 @@ $user_data = check_login($conn);
         }
 
         table {
-          border-collapse: collapse;
-          width: 80%;
-          margin: 20px;
-          background-color: #fff;
-          box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-collapse: collapse;
+            width: 80%;
+            margin: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
 
-        th, td {
-          padding: 15px;
-          text-align: left;
-          border-bottom: 1px solid #ddd;
+        th,
+        td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
         }
 
         th {
-          background-color: #f2f2f2;
+            background-color: #f2f2f2;
         }
 
         .quantity input {
-          width: 30px;
-          text-align: center;
+            width: 30px;
+            text-align: center;
         }
 
         .quantity button {
-          background-color: #4caf50;
-          color: #fff;
-          border: none;
-          padding: 5px 10px;
-          cursor: pointer;
+            background-color: #4caf50;
+            color: #fff;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
         }
 
         .quantity button:hover {
-          background-color: #45a049;
+            background-color: #45a049;
         }
 
         .total-row {
-          font-weight: bold;
+            font-weight: bold;
         }
 
         .customer-details {
-          width: 80%;
-          margin: 20px;
+            width: 80%;
+            margin: 20px;
         }
 
         .customer-details input {
-          width: 100%;
-          padding: 10px;
-          margin-bottom: 10px;
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
         }
 
         .checkout-btn {
-          background-color: #ff884d;
-          color: #000;
-          border: none;
-          padding: 16px 20px;
-          margin-top:20px;
-          font-size: 16px;
-          font-weight: bold;
-          cursor: pointer;
-          border-top: 1px solid black;
+            background-color: #ff884d;
+            color: #000;
+            border: none;
+            padding: 16px 20px;
+            margin-top: 20px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            border-top: 1px solid black;
         }
 
         .checkout-btn:hover {
-          background-color: #ff7733;
+            background-color: #ff7733;
         }
     </style>
 </head>
@@ -150,56 +248,81 @@ $user_data = check_login($conn);
                     echo '<li><a href="signup.php">Signup</a></li>';
                 }
                 ?>
-                
+
             </ul>
             <h1 class="logo">Zaika</h1>
         </div>
     </nav>
+
+    <form method="post">
+        <table style="margin:70px auto 20px auto !important;">
+            <thead>
+                <tr>
+                    <th>Product</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Total</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+            <?php
+            $grandTotal = 0;
+            $userId = $user_data['id'];
+            $sql = "SELECT * FROM cart WHERE user_id = ?";
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param("i", $userId);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            if ($result->num_rows > 0) {
+                while ($row = $result->fetch_assoc()) {
+                    $cart_id = $row['id'];
+                    $productName = $row['name'];
+                    $productPrice = $row['price'];
+                    $quantity = $row['quantity'];
+                    $total = $productPrice * $quantity;
+                    $grandTotal += $total;
+                    echo '<tr>
+                            <td>' . $productName . '</td>
+                            <td>&#8377;' . $productPrice . '</td>
+                            <td class="quantity">
+                              <form method="post">
+                                <button type="submit" name="decrease" value="' . $cart_id . '">-</button>
+                                <input type="text" value="' . $quantity . '" readonly>
+                                <button type="submit" name="increase" value="' . $cart_id . '">+</button>
+                              </form>
+                            </td>
+                            <td>&#8377;' . $total . '</td>
+                            <td>
+                                <button type="submit" name="delete" value="' . $cart_id . '"
+                                    style="cursor:pointer; color:red; font-size:16px; border:none; width:30px; height:30px; background:none;">
+                                    <i class="ti-view-list-alt menu-icon fa fa-trash" aria-hidden="true"></i>
+                                </button>
+                            </td>
+                          </tr>';
+                }
+              }
+            ?>
+            </tbody>
+        </table>
+    </form>
+
+    <div class="total-row" style="text-align:center; margin:10px auto !important;">
+        <span>Grand Total: &#8377;<?php echo number_format($grandTotal, 2); ?></span>
+    </div>
     
-    <table style="margin:70px auto 20px auto !important;">
-        <thead>
-            <tr>
-                <th>Product</th>
-                <th>Price</th>
-                <th>Quantity</th>
-                <th>Total</th>
-                <th>Delete</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>Product 1</td>
-                <td>$20.00</td>
-                <td class="quantity">
-                <button onclick="decreaseQuantity(this)">-</button>
-                <input type="text" value="1">
-                <button onclick="increaseQuantity(this)">+</button>
-                </td>
-                <td>$20.00</td>
-                <td><button style="cursor:pointer; color:red; font-size:16px; border:none; width:30px; height:30px; background:none;">
-                        <i class="ti-view-list-alt menu-icon fa fa-trash" aria-hidden="true"></i>
-                    </button>
-                </td>
-            </tr>
-        <!-- Add more rows as needed -->
-        </tbody>
-    </table>
-
-  <div class="total-row" style="margin:10px auto !important;">
-    <span>Grand Total: $20.00</span>
-  </div>
-
-  <div class="customer-details" style="margin:10px auto !important;">
-        <h2>Customer Details</h2>
-        <input type="text" placeholder="Name">
-        <input type="text" placeholder="Mobile Number">
-        <input type="text" placeholder="Address">
-        <input type="text" placeholder="Plate Count">
-        <input type="date" placeholder="Date">
-  </div>
-
-  <button class="checkout-btn">Place Order</button>
-
+    <form action="" method="post">
+      <div class="customer-details" style="margin:10px auto !important;">
+          <h2>Customer Details</h2>
+          <input type="text" name="name" placeholder="Name">
+          <input type="text" name="mo_no" placeholder="Mobile Number">
+          <input type="text" name="address" placeholder="Address">
+          <input type="text" name="count" placeholder="Plate Count">
+          <?php date_default_timezone_set('Asia/Kolkata'); ?>
+          <input type="date" name="date" placeholder="Date" min="<?php echo date('Y-m-d'); ?>">
+      </div>
+      <button type="submit" name="place_order" style="text-align:center; width:100%" class="checkout-btn">Place Order</button>
+  </form>
 
     <footer id="footer">
         <h2 style="font-size: 25px !important; padding:10px">Zaika &copy; all rights reserved</h2>
@@ -210,39 +333,12 @@ $user_data = check_login($conn);
     <script src="assset/js/script.js"></script>
 
     <script>
-    function increaseQuantity(button) {
-      var input = button.previousElementSibling;
-      input.value = parseInt(input.value) + 1;
-      updateTotal(input);
-    }
-
-    function decreaseQuantity(button) {
-      var input = button.nextElementSibling;
-      if (parseInt(input.value) > 1) {
-        input.value = parseInt(input.value) - 1;
-        updateTotal(input);
-      }
-    }
-
-    function updateTotal(input) {
-      var price = parseFloat(input.parentNode.previousElementSibling.textContent.replace('$', ''));
-      var total = price * parseInt(input.value);
-      input.parentNode.nextElementSibling.textContent = '$' + total.toFixed(2);
-      updateGrandTotal();
-    }
-
-    function updateGrandTotal() {
-      var totalElements = document.querySelectorAll('.total-row td:last-child');
-      var grandTotal = 0;
-      totalElements.forEach(function (element) {
-        grandTotal += parseFloat(element.textContent.replace('$', ''));
-      });
-      document.querySelector('.total-row span').textContent = 'Grand Total: $' + grandTotal.toFixed(2);
-    }
-  </script>
+    </script>
 
 </html>
 
 </body>
 
 </html>
+
+ 

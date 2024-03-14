@@ -156,7 +156,8 @@ if(isset($_POST['add_to_cart'])) {
                 <li><a href="#food">Trending</a></li>
                 <li><a href="#food-menu">Menu</a></li>
                 <li><a href="#contact">Contact</a></li>
-                <li><a href="#contact">Bookings</a></li>
+                <li><a href="orders.php">Bookings</a></li>
+                <li><a href="booking.php">Cart</a></li>
                 <?php
                 if ($user_data) {
                     echo '<li>Hi, ' . $user_data['f_name'] . '.</li>';
@@ -173,10 +174,10 @@ if(isset($_POST['add_to_cart'])) {
     </nav>
     
     <?php
-
-    echo '<h1 style="padding-top: 52px !important; text-align: center">Dal</h1>';
+    echo '<h1 style="padding-top: 52px !important; text-align: center; font-size:52px;">Italian</h1>';
+    echo '<h1 style="padding-top: 10px !important; text-align: center">Pizza</h1>';
     echo '<div class="product-container">';
-    $result = $conn->query("SELECT * FROM menu_items WHERE category='Dal'");
+    $result = $conn->query("SELECT * FROM menu_items WHERE category='Pizza'");
     if ($result->num_rows > 0) {
         while ($row = $result->fetch_assoc()) {
             // Fetch product details from menu_items table
@@ -186,7 +187,7 @@ if(isset($_POST['add_to_cart'])) {
             echo '<form action="" method="post">';
             if ($row['img']) {
                 $imgSrc = 'admin/pages/tables/' . $row['img'];
-                echo '<img height="180px" width="100%" src="' . $imgSrc . '" alt="' . $productName . '">';
+                echo '<img  height="180px" width="100%" src="' . $imgSrc . '" alt="' . $productName . '">';
             }
             echo '<div class="product-info">';
             echo '<h2>' . $productName . '</h2>';
@@ -201,11 +202,80 @@ if(isset($_POST['add_to_cart'])) {
             echo '</div>';
         }
     } else {
-        echo 'No products found.';
+        echo '<h1 style="padding:20px">This Menu Options Will Be Available Soon...!</h1>';
+    }
+    // $conn->close();
+    echo '</div>';
+    ?>
+
+    <?php
+    echo '<h1 style="padding-top: 52px !important; text-align: center">Pasta</h1>';
+    echo '<div class="product-container">';
+    $result = $conn->query("SELECT * FROM menu_items WHERE category='Pasta'");
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            // Fetch product details from menu_items table
+            $productName = $row['name'];
+            $productPrice = $row['price'];
+            echo '<div class="product">';
+            echo '<form action="" method="post">';
+            if ($row['img']) {
+                $imgSrc = 'admin/pages/tables/' . $row['img'];
+                echo '<img  height="180px" width="100%" src="' . $imgSrc . '" alt="' . $productName . '">';
+            }
+            echo '<div class="product-info">';
+            echo '<h2>' . $productName . '</h2>';
+            echo '<p class="price">&#8377;' . $productPrice . '</p>';
+            // echo '<p class="description">' . $row['descr'] . '</p>';
+            echo '<button type="submit" name="add_to_cart" class="add-to-cart">Add To Cart</button>';
+            echo '<input type="hidden" name="product_id" value="' . $row['id'] . '">';
+            echo '<input type="hidden" name="product_name" value="' . $productName . '">';
+            echo '<input type="hidden" name="product_price" value="' . $productPrice . '">';
+            echo '</div>';
+            echo '</form>';
+            echo '</div>';
+        }
+    } else {
+        echo '<h1 style="padding:20px">This Menu Options Will Be Available Soon...!</h1>';
+    }
+    // $conn->close();
+    echo '</div>';
+    ?>
+
+    <?php
+    echo '<h1 style="padding-top: 52px !important; text-align: center">Bread</h1>';
+    echo '<div class="product-container">';
+    $result = $conn->query("SELECT * FROM menu_items WHERE category='Bread'");
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            // Fetch product details from menu_items table
+            $productName = $row['name'];
+            $productPrice = $row['price'];
+            echo '<div class="product">';
+            echo '<form action="" method="post">';
+            if ($row['img']) {
+                $imgSrc = 'admin/pages/tables/' . $row['img'];
+                echo '<img  height="180px" width="100%" src="' . $imgSrc . '" alt="' . $productName . '">';
+            }
+            echo '<div class="product-info">';
+            echo '<h2>' . $productName . '</h2>';
+            echo '<p class="price">&#8377;' . $productPrice . '</p>';
+            // echo '<p class="description">' . $row['descr'] . '</p>';
+            echo '<button type="submit" name="add_to_cart" class="add-to-cart">Add To Cart</button>';
+            echo '<input type="hidden" name="product_id" value="' . $row['id'] . '">';
+            echo '<input type="hidden" name="product_name" value="' . $productName . '">';
+            echo '<input type="hidden" name="product_price" value="' . $productPrice . '">';
+            echo '</div>';
+            echo '</form>';
+            echo '</div>';
+        }
+    } else {
+        echo '<h1 style="padding:20px">This Menu Options Will Be Available Soon...!</h1>';
     }
     $conn->close();
     echo '</div>';
     ?>
+
 
     <footer id="footer">
         <h2>Zaika &copy; all rights reserved</h2>

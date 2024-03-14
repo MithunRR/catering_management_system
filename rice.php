@@ -6,6 +6,49 @@ include("function.php");
 
 $user_data = check_login($conn);
 
+// $user_id = $user_data['id'];
+
+if(isset($_POST['add_to_cart'])) {
+    // Check if the user is logged in
+    $user_id = $user_data['id'];
+    if($user_data) {
+        $productId = $_POST['product_id'];
+        $productName = $_POST['product_name'];
+        $productPrice = $_POST['product_price'];
+        $userId = $user_data['id'];
+        // Check if the product is already in the cart
+        $checkQuery = $conn->prepare("SELECT * FROM cart WHERE user_id = ? AND product_id = ?");
+        $checkQuery->bind_param("ii", $userId, $productId);
+        $checkQuery->execute();
+        $checkResult = $checkQuery->get_result();
+
+        if($checkResult->num_rows == 0) {
+            // If the product is not in the cart, insert it with quantity 1
+            $insertQuery = $conn->prepare("INSERT INTO cart (name, price, product_id, quantity, user_id) VALUES (?, ?, ?, 1, ?)");
+            $insertQuery->bind_param("siii", $productName, $productPrice, $productId, $userId);
+            if($insertQuery->execute()) {
+                // echo 'Product added to cart successfully.';
+            } else {
+                echo 'Error adding product to cart: ' . $conn->error;
+            }
+        } else {
+            // If the product is already in the cart, increase the quantity by 1
+            $updateQuery = $conn->prepare("UPDATE cart SET quantity = quantity + 1 WHERE user_id = ? AND product_id = ?");
+            $updateQuery->bind_param("ii", $userId, $productId);
+            if($updateQuery->execute()) {
+                // echo 'Quantity increased for the product in the cart.';
+            } else {
+                echo 'Error updating quantity in the cart: ' . $conn->error;
+            }
+        }
+        $checkQuery->close();
+    } else {
+        echo '<script>alert("Please login first !")</script>';
+        echo '<script>window.location.href = "login.php";</script>'; 
+    }
+}
+
+
 ?>
 
 <html lang="en">
@@ -128,28 +171,37 @@ $user_data = check_login($conn);
             <h1 class="logo">Zaika</h1>
         </div>
     </nav>
-    
+
     <?php
+
     echo '<h1 style="padding-top: 52px !important; text-align: center">Rice</h1>';
     echo '<div class="product-container">';
     $result = $conn->query("SELECT * FROM menu_items WHERE category='Rice'");
     if ($result->num_rows > 0) {
         while ($row = $result->fetch_assoc()) {
+            // Fetch product details from menu_items table
+            $productName = $row['name'];
+            $productPrice = $row['price'];
             echo '<div class="product">';
+            echo '<form action="" method="post">';
             if ($row['img']) {
                 $imgSrc = 'admin/pages/tables/' . $row['img'];
-                echo '<img src="' . $imgSrc . '" alt="' . $row['name'] . '">';
+                echo '<img height="180px" width="100%" src="' . $imgSrc . '" alt="' . $productName . '">';
             }
             echo '<div class="product-info">';
-            echo '<h2>' . $row['name'] . '</h2>';
-            echo '<p class="price">$' . $row['price'] . '</p>';
+            echo '<h2>' . $productName . '</h2>';
+            echo '<p class="price">&#8377;' . $productPrice . '</p>';
             // echo '<p class="description">' . $row['descr'] . '</p>';
-            echo '<button>Add To Cart</button>';
+            echo '<button type="submit" name="add_to_cart" class="add-to-cart">Add To Cart</button>';
+            echo '<input type="hidden" name="product_id" value="' . $row['id'] . '">';
+            echo '<input type="hidden" name="product_name" value="' . $productName . '">';
+            echo '<input type="hidden" name="product_price" value="' . $productPrice . '">';
             echo '</div>';
+            echo '</form>';
             echo '</div>';
         }
     } else {
-        echo 'No products found.';
+        echo '<h1 style="padding:20px">This Menu Options Will Be Available Soon...!</h1>';
     }
     $conn->close();
     echo '</div>';

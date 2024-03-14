@@ -116,7 +116,120 @@ $user_data = check_login($conn);
     <section id="food-menu">
         <h2 class="food-menu-heading">Food Menu</h2>
         <div class="food-menu-container container">
+
             <div class="food-menu-item">
+                <div class="food-img">
+                    <img style="border:2px solid black;" src="assset/images/menu/mainc.jpg" alt="" />
+                </div>
+                <div class="food-description">
+                    <h2 class="food-titile">North Indian</h2>
+                    <p>
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Non,
+                        quae.
+                    </p>
+                    <p class="food-price"><a href="/catering/mainc.php">View More</a></p>
+                </div>
+            </div>
+
+            <div class="food-menu-item">
+                <div class="food-img">
+                    <img style="border:2px solid black;" src="assset/images/menu/south-ind.jpg" alt="" />
+                </div>
+                <div class="food-description">
+                    <h2 class="food-titile">South Indian</h2>
+                    <p>
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Non,
+                        quae.
+                    </p>
+                    <p class="food-price"><a href="/catering/south_ind.php">View More</a></p>
+                </div>
+            </div>
+
+            <div class="food-menu-item">
+                <div class="food-img">
+                    <img style="border:2px solid black;" src="assset/images/menu/italian.webp" alt="" />
+                </div>
+                <div class="food-description">
+                    <h2 class="food-titile">Italian</h2>
+                    <p>
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Non,
+                        quae.
+                    </p>
+                    <p class="food-price"><a href="/catering/italian.php">View More</a></p>
+                </div>
+            </div>
+
+            <div class="food-menu-item">
+                <div class="food-img">
+                    <img style="border:2px solid black;" src="assset/images/menu/chinese.avif" alt="" />
+                </div>
+                <div class="food-description">
+                    <h2 class="food-titile">Chinese</h2>
+                    <p>
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Non,
+                        quae.
+                    </p>
+                    <p class="food-price"><a href="/catering/chinese.php">View More</a></p>
+                </div>
+            </div>
+
+            <div class="food-menu-item">
+                <div class="food-img">
+                    <img style="border:2px solid black;" src="assset/images/menu/dessert.jpg" alt="" />
+                </div>
+                <div class="food-description">
+                    <h2 class="food-titile">Desserts</h2>
+                    <p>
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Non,
+                        quae.
+                    </p>
+                    <p class="food-price"><a href="/catering/dessert.php">View More</a></p>
+                </div>
+            </div>
+
+            <div class="food-menu-item">
+                <div class="food-img">
+                    <img style="border:2px solid black;" src="assset/images/menu/mock.jpeg" alt="" />
+                </div>
+                <div class="food-description">
+                    <h2 class="food-titile">Mocktails</h2>
+                    <p>
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Non,
+                        quae.
+                    </p>
+                    <p class="food-price"><a href="/catering/mocktail.php">View More</a></p>
+                </div>
+            </div>
+
+            <div class="food-menu-item">
+                <div class="food-img">
+                    <img style="border:2px solid black;" src="assset/images/menu/starter.jpeg" alt="" />
+                </div>
+                <div class="food-description">
+                    <h2 class="food-titile">Starters</h2>
+                    <p>
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Non,
+                        quae.
+                    </p>
+                    <p class="food-price"><a href="/catering/starter.php">View More</a></p>
+                </div>
+            </div>
+
+            <div class="food-menu-item">
+                <div class="food-img">
+                    <img style="border:2px solid black;" src="assset/images/menu/chaat.jpg" alt="" />
+                </div>
+                <div class="food-description">
+                    <h2 class="food-titile">Chaat</h2>
+                    <p>
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Non,
+                        quae.
+                    </p>
+                    <p class="food-price"><a href="/catering/chaat.php">View More</a></p>
+                </div>
+            </div>
+
+            <!-- <div class="food-menu-item">
                 <div class="food-img">
                     <img style="border:2px solid black;" src="assset/images/menu/jeera_rice.jpeg" alt="" />
                 </div>
@@ -220,7 +333,7 @@ $user_data = check_login($conn);
                     </p>
                     <p class="food-price"><a href="">View More</a></p>
                 </div>
-            </div>
+            </div> -->
         </div>
     </section>
 
