@@ -16,12 +16,7 @@ function addItemFormHide() {
   addIFCB.style.display = 'none';
 }
 
-function scrollToTop() {
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-
 function updateItemForm(itemId) {
-  // Construct the ID of the update form based on the item ID
   let updateFormId = 'updateItemForm_' + itemId;
 
   // Hide all forms with IDs starting with 'updateItemForm_'

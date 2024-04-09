@@ -3,10 +3,28 @@ session_start();
 
 include("connection.php");
 include("function.php");
-
 $user_data = check_login($conn);
 
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['name'], $_POST['messege'])) {
+    $name = $_POST['name'];
+    $email = $_POST['email'];
+    $messege = $_POST['messege'];
+    
+    if (!empty($name) && !empty($email) && !empty($messege)) {
+        $query = "INSERT INTO contacts_form (name, email, messege) VALUES (?, ?, ?)";
+        $stmt = mysqli_prepare($conn, $query);
+        mysqli_stmt_bind_param($stmt, "sss", $name, $email, $messege);
+        mysqli_stmt_execute($stmt);
+        
+        echo '<script>alert("Form submitted successfully!");</script>';
+        header("Location: index.php");
+        exit; 
+    } else {
+        echo '<script>alert("Please enter valid information.");</script>';
+    }
+}
 ?>
+
 
 <html lang="en">
 <head>
@@ -78,283 +96,39 @@ $user_data = check_login($conn);
             </div>
         </div>
     </section>
-    <section id="food">
-        <h2>Types of food</h2>
-        <div class="food-container container">
-            <div class="food-type fruite">
-                <div class="img-container">
-                    <img src="assset\images\cust_index\food1.jpg" alt="error" />
-                    <div class="img-content">
-                        <h3>Silver Platters</h3>
-                        <a href="https://en.wikipedia.org/wiki/Fruit" class="btn btn-primary" target="blank">learn
-                            more</a>
-                    </div>
-                </div>
-            </div>
-            <div class="food-type vegetable">
-                <div class="img-container">
-                    <img src="assset\images\cust_index\food2.jpg" alt="error" />
-                    <div class="img-content">
-                        <h3>Golden Platters</h3>
-                        <a href="https://en.wikipedia.org/wiki/Vegetable" class="btn btn-primary" target="blank">learn
-                            more</a>
-                    </div>
-                </div>
-            </div>
-            <div class="food-type grin">
-                <div class="img-container">
-                    <img src="assset\images\cust_index\food3.jpg" alt="error" />
-                    <div class="img-content">
-                        <h3>Platinum Platters</h3>
-                        <a href="https://en.wikipedia.org/wiki/Grain" class="btn btn-primary" target="blank">learn
-                            more</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+
     <section id="food-menu">
         <h2 class="food-menu-heading">Food Menu</h2>
         <div class="food-menu-container container">
+        <?php
+        include __DIR__ . '/connection.php';
 
-            <div class="food-menu-item">
-                <div class="food-img">
-                    <img style="border:2px solid black;" src="assset/images/menu/mainc.jpg" alt="" />
-                </div>
-                <div class="food-description">
-                    <h2 class="food-titile">North Indian</h2>
-                    <p>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Non,
-                        quae.
-                    </p>
-                    <p class="food-price"><a href="/catering/mainc.php">View More</a></p>
-                </div>
-            </div>
+        $sql = 'SELECT DISTINCT category, images FROM category';
+        $result = $conn->query($sql);
 
-            <div class="food-menu-item">
-                <div class="food-img">
-                    <img style="border:2px solid black;" src="assset/images/menu/south-ind.jpg" alt="" />
-                </div>
-                <div class="food-description">
-                    <h2 class="food-titile">South Indian</h2>
-                    <p>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Non,
-                        quae.
-                    </p>
-                    <p class="food-price"><a href="/catering/south_ind.php">View More</a></p>
-                </div>
-            </div>
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                echo '<div class="food-menu-item" >
+                    <div class="food-img">
+                        <img style="border: 2px solid black;" src="admin/' . $row['images'] . '" alt="' . $row['images'] . '" />
+                    </div>
+                    <div class="food-description">
+                        <h1 style="font-size:43px;" class="food-title">' . $row['category'] . '</h1>
+                        
+                        <form action="south_ind.php" method="post">
+                            <input type="hidden" name="category" value="' . $row['category'] . '">
+                            <button type="submit" class="food-price" style="cursor:pointer; border:none; outline:none; background:none; font-size:25px;">View Menu</button>
+                        </form>
+                    </div>
+                </div>';
+            }
+        } else {
+            echo '<p>No categories found</p>';
+        }
+        ?>
 
-            <div class="food-menu-item">
-                <div class="food-img">
-                    <img style="border:2px solid black;" src="assset/images/menu/italian.webp" alt="" />
-                </div>
-                <div class="food-description">
-                    <h2 class="food-titile">Italian</h2>
-                    <p>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Non,
-                        quae.
-                    </p>
-                    <p class="food-price"><a href="/catering/italian.php">View More</a></p>
-                </div>
-            </div>
-
-            <div class="food-menu-item">
-                <div class="food-img">
-                    <img style="border:2px solid black;" src="assset/images/menu/chinese.avif" alt="" />
-                </div>
-                <div class="food-description">
-                    <h2 class="food-titile">Chinese</h2>
-                    <p>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Non,
-                        quae.
-                    </p>
-                    <p class="food-price"><a href="/catering/chinese.php">View More</a></p>
-                </div>
-            </div>
-
-            <div class="food-menu-item">
-                <div class="food-img">
-                    <img style="border:2px solid black;" src="assset/images/menu/dessert.jpg" alt="" />
-                </div>
-                <div class="food-description">
-                    <h2 class="food-titile">Desserts</h2>
-                    <p>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Non,
-                        quae.
-                    </p>
-                    <p class="food-price"><a href="/catering/dessert.php">View More</a></p>
-                </div>
-            </div>
-
-            <div class="food-menu-item">
-                <div class="food-img">
-                    <img style="border:2px solid black;" src="assset/images/menu/mock.jpeg" alt="" />
-                </div>
-                <div class="food-description">
-                    <h2 class="food-titile">Mocktails</h2>
-                    <p>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Non,
-                        quae.
-                    </p>
-                    <p class="food-price"><a href="/catering/mocktail.php">View More</a></p>
-                </div>
-            </div>
-
-            <div class="food-menu-item">
-                <div class="food-img">
-                    <img style="border:2px solid black;" src="assset/images/menu/starter.jpeg" alt="" />
-                </div>
-                <div class="food-description">
-                    <h2 class="food-titile">Starters</h2>
-                    <p>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Non,
-                        quae.
-                    </p>
-                    <p class="food-price"><a href="/catering/starter.php">View More</a></p>
-                </div>
-            </div>
-
-            <div class="food-menu-item">
-                <div class="food-img">
-                    <img style="border:2px solid black;" src="assset/images/menu/chaat.jpg" alt="" />
-                </div>
-                <div class="food-description">
-                    <h2 class="food-titile">Chaat</h2>
-                    <p>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Non,
-                        quae.
-                    </p>
-                    <p class="food-price"><a href="/catering/chaat.php">View More</a></p>
-                </div>
-            </div>
-
-            <!-- <div class="food-menu-item">
-                <div class="food-img">
-                    <img style="border:2px solid black;" src="assset/images/menu/jeera_rice.jpeg" alt="" />
-                </div>
-                <div class="food-description">
-                    <h2 class="food-titile">Rice</h2>
-                    <p>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Non,
-                        quae.
-                    </p>
-                    <p class="food-price"><a href="/catering/rice.php">View More</a></p>
-                </div>
-            </div>
-
-            <div class="food-menu-item">
-                <div class="food-img">
-                    <img style="border:2px solid black;" src="assset/images/menu/dal.webp" alt="error" />
-                </div>
-                <div class="food-description">
-                    <h2 class="food-titile">Dal</h2>
-                    <p>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Non,
-                        quae.
-                    </p>
-                    <p class="food-price"><a href="/catering/dal.php">View More</a></p>
-                </div>
-            </div>
-            <div class="food-menu-item">
-                <div class="food-img">
-                    <img style="border:2px solid black;" src="assset/images/menu/naan.webp" alt="" />
-                </div>
-                <div class="food-description">
-                    <h2 class="food-titile">Roti/Paratha/Bread</h2>
-                    <p>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Non,
-                        quae.
-                    </p>
-                    <p class="food-price"><a href="/catering/roti.php">View More</a></p>
-                </div>
-            </div>
-            <div class="food-menu-item">
-                <div class="food-img">
-                    <img style="border:2px solid black;" src="assset/images/menu/mainc.jpg" alt="" />
-                </div>
-                <div class="food-description">
-                    <h2 class="food-titile">Main Course</h2>
-                    <p>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Non,
-                        quae.
-                    </p>
-                    <p class="food-price"><a href="/catering/mainc.php">View More</a></p>
-                </div>
-            </div>
-            <div class="food-menu-item">
-                <div class="food-img">
-                    <img style="border:2px solid black;" src="assset/images/menu/curries.jpg" alt="" />
-                </div>
-                <div class="food-description">
-                    <h2 class="food-titile">Curries</h2>
-                    <p>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Non,
-                        quae.
-                    </p>
-                    <p class="food-price"><a href="/catering/curries.php">View More</a></p>
-                </div>
-            </div>
-            <div class="food-menu-item">
-                <div class="food-img">
-                    <img style="border:2px solid black;" src="assset/images/menu/sweet.jpg" alt="" />
-                </div>
-                <div class="food-description">
-                    <h2 class="food-titile">Sweet</h2>
-                    <p>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Non,
-                        quae.
-                    </p>
-                    <p class="food-price"><a href="/catering/sweet.php">View More</a></p>
-                </div>
-            </div>
-            <div class="food-menu-item">
-                <div class="food-img">
-                    <img style="border:2px solid black;" src="assset/images/menu/chaat.jpg" alt="" />
-                </div>
-                <div class="food-description">
-                    <h2 class="food-titile">Chaat</h2>
-                    <p>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Non,
-                        quae.
-                    </p>
-                    <p class="food-price"><a href="/catering/chaat.php">View More</a></p>
-                </div>
-            </div>
-            <div class="food-menu-item">
-                <div class="food-img">
-                    <img style="border:2px solid black;" src="assset/images/menu/spec.jpg" alt="" />
-                </div>
-                <div class="food-description">
-                    <h2 class="food-titile">Special</h2>
-                    <p>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Non,
-                        quae.
-                    </p>
-                    <p class="food-price"><a href="">View More</a></p>
-                </div>
-            </div> -->
         </div>
     </section>
-
-    <?php
-        if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['name'], $_POST['messege'])) {
-            $name = $_POST['name'];
-            $email = $_POST['email'];
-            $messege = $_POST['messege'];
-            
-            if (!empty($name) && !empty($email) && !empty($messege)) {
-                $query = "INSERT INTO contacts_form (name, email, messege) VALUES ('$name', '$email', '$messege')";
-                mysqli_query($conn, $query);
-                header("Location: index.php");
-                echo '<script>alert("Form submitted successfully!");</script>';
-                die;
-            } else {
-                echo '<script>alert("Please enter valid information.");</script>';
-            }
-        }
-        
-    ?>
 
     <section id="contact">
         <div class="contact-container container">

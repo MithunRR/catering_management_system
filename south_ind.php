@@ -6,50 +6,55 @@ include("function.php");
 
 $user_data = check_login($conn);
 
-// $user_id = $user_data['id'];
-
-if(isset($_POST['add_to_cart'])) {
-    // Check if the user is logged in
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['add_to_cart'])) {
     $user_id = $user_data['id'];
-    if($user_data) {
+    if ($user_data) {
         $productId = $_POST['product_id'];
         $productName = $_POST['product_name'];
+        $cat = $_POST['category'];
         $productPrice = $_POST['product_price'];
         $userId = $user_data['id'];
-        // Check if the product is already in the cart
+
         $checkQuery = $conn->prepare("SELECT * FROM cart WHERE user_id = ? AND product_id = ?");
         $checkQuery->bind_param("ii", $userId, $productId);
         $checkQuery->execute();
         $checkResult = $checkQuery->get_result();
 
-        if($checkResult->num_rows == 0) {
-            // If the product is not in the cart, insert it with quantity 1
-            $insertQuery = $conn->prepare("INSERT INTO cart (name, price, product_id, quantity, user_id) VALUES (?, ?, ?, 1, ?)");
-            $insertQuery->bind_param("siii", $productName, $productPrice, $productId, $userId);
-            if($insertQuery->execute()) {
-                // echo 'Product added to cart successfully.';
+        if ($checkResult->num_rows == 0) {
+            $insertQuery = $conn->prepare("INSERT INTO cart (name, price, category, product_id, quantity, user_id) VALUES (?, ?, ?, ?, 1, ?)");
+            $insertQuery->bind_param("ssssi", $productName, $productPrice, $cat, $productId, $userId);
+
+            if ($insertQuery->execute()) {
+                $_SESSION['added_to_cart'] = true; // Flag to indicate item added to cart
             } else {
-                echo 'Error adding product to cart: ' . $conn->error;
+                echo '<script>alert("Error adding product to cart: ' . $conn->error . '");</script>';
             }
         } else {
-            // If the product is already in the cart, increase the quantity by 1
             $updateQuery = $conn->prepare("UPDATE cart SET quantity = quantity + 1 WHERE user_id = ? AND product_id = ?");
             $updateQuery->bind_param("ii", $userId, $productId);
-            if($updateQuery->execute()) {
-                // echo 'Quantity increased for the product in the cart.';
+            if ($updateQuery->execute()) {
+                $_SESSION['added_to_cart'] = true; // Flag to indicate item added to cart
             } else {
-                echo 'Error updating quantity in the cart: ' . $conn->error;
+                echo '<script>alert("Error updating quantity in the cart: ' . $conn->error . '");</script>';
             }
         }
+
         $checkQuery->close();
     } else {
-        echo '<script>alert("Please login first !")</script>';
+        echo '<script>alert("Please login first !");</script>';
         echo '<script>window.location.href = "login.php";</script>'; 
     }
 }
 
-
+// Redirect to avoid duplicate submissions on page reload
+// if ($_SESSION['added_to_cart'] ?? false) {
+//     unset($_SESSION['added_to_cart']); // Clear the flag
+//     header("Location: {$_SERVER['REQUEST_URI']}"); // Redirect to the same page
+//     exit;
+// }
 ?>
+
+
 
 <html lang="en">
 <head>
@@ -61,6 +66,7 @@ if(isset($_POST['add_to_cart'])) {
         integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="assset/css/style.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
     <style>
         body {
@@ -172,46 +178,85 @@ if(isset($_POST['add_to_cart'])) {
             <h1 class="logo">Zaika</h1>
         </div>
     </nav>
-    
-    <?php
 
-    echo '<h1 style="padding-top: 52px !important; text-align: center">South Indian</h1>';
-    echo '<div class="product-container">';
-    $result = $conn->query("SELECT * FROM menu_items WHERE category='South Indian'");
-    if ($result->num_rows > 0) {
-        while ($row = $result->fetch_assoc()) {
-            // Fetch product details from menu_items table
-            $productName = $row['name'];
-            $productPrice = $row['price'];
-            echo '<div class="product">';
-            echo '<form action="" method="post">';
-            if ($row['img']) {
-                $imgSrc = 'admin/pages/tables/' . $row['img'];
-                echo '<img  height="180px" width="100%" src="' . $imgSrc . '" alt="' . $productName . '">';
+    <?php
+        if(isset($_POST['category'])) {
+            $category = $_POST['category'];
+            
+            echo '<h1 style="padding-top: 52px !important; text-align: center">' . $category . '</h1>';
+            echo '<div class="product-container">';
+            
+            $result = $conn->query("SELECT * FROM menu_items WHERE category='$category'");
+            if ($result->num_rows > 0) {
+                while ($row = $result->fetch_assoc()) {
+                    $productName = $row['name'];
+                    $productPrice = $row['price'];
+                    $cat = $row['category'];
+                    echo '<div class="product">';
+                    echo '<form action="" method="post">';
+                    if ($row['img']) {
+                        $imgSrc = 'admin/pages/tables/' . $row['img'];
+                        echo '<img  height="180px" width="100%" src="' . $imgSrc . '" alt="' . $productName . '">';
+                    }
+                    echo '<div class="product-info">';
+                    echo '<h2>' . $productName . '</h2>';
+                    echo '<p class="price">&#8377;' . $productPrice . '</p>';
+                    echo '<button type="submit" name="add_to_cart" class="add-to-cart">Add To Cart</button>';
+                    echo '<input type="hidden" name="product_id" value="' . $row['id'] . '">';
+                    echo '<input type="hidden" name="product_name" value="' . $productName . '">';
+                    echo '<input type="hidden" name="category" value="'.$cat.'">';
+                    echo '<input type="hidden" name="product_price" value="' . $productPrice . '">';
+                    echo '</div>';
+                    echo '</form>';
+                    echo '</div>';
+                }
+            } else {
+                echo '<h1 style="padding:20px">The menu will be available soon...!</h1>';
             }
-            echo '<div class="product-info">';
-            echo '<h2>' . $productName . '</h2>';
-            echo '<p class="price">&#8377;' . $productPrice . '</p>';
-            // echo '<p class="description">' . $row['descr'] . '</p>';
-            echo '<button type="submit" name="add_to_cart" class="add-to-cart">Add To Cart</button>';
-            echo '<input type="hidden" name="product_id" value="' . $row['id'] . '">';
-            echo '<input type="hidden" name="product_name" value="' . $productName . '">';
-            echo '<input type="hidden" name="product_price" value="' . $productPrice . '">';
+            
             echo '</div>';
-            echo '</form>';
-            echo '</div>';
+        } else {
+            // If category is not set, redirect back to the previous page
+            header("Location: index.php");
+            exit();
         }
-    } else {
-        echo '<h1 style="padding:20px">This Menu Options Will Be Available Soon...!</h1>';
-    }
-    $conn->close();
-    echo '</div>';
     ?>
 
     <footer id="footer">
         <h2>Zaika &copy; all rights reserved</h2>
     </footer>
     <!-- .................../ JS Code for smooth scrolling /...................... -->
+    <!-- Your HTML code -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+    $(".add-to-cart-form").submit(function(event){
+        event.preventDefault(); // Prevent default form submission
+        
+        var formData = $(this).serialize(); // Serialize form data
+        
+        $.ajax({
+            type: "POST",
+            url: "", // Leave empty to send the request to the same page
+            data: formData,
+            dataType: "html",
+            success: function(response){
+                // Update the UI as needed
+                $(".product-container").html(response);
+                // Redirect to the same page
+                window.location.href = window.location.href;
+            },
+            error: function(xhr, status, error){
+                // Error handling for AJAX request
+                console.error(xhr.responseText);
+            }
+        });
+    });
+});
+</script>
+
+
+
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="assset/js/script.js"></script>

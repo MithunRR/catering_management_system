@@ -2,6 +2,8 @@
 include __DIR__ . '/../../../connection.php';
 include __DIR__ . '/../../../function.php';
 
+date_default_timezone_set('Asia/Kolkata');
+
 // Post / Add items to menu items
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["item_name"])) {
     $name = $_POST['item_name'];
@@ -85,19 +87,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["update_name"])) {
 <html lang="en">
 
 <head>
-  <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <title>Zaika Admin</title>
-  <!-- plugins:css -->
   <link rel="stylesheet" href="../../vendors/ti-icons/css/themify-icons.css">
   <link rel="stylesheet" href="../../vendors/base/vendor.bundle.base.css">
-  <!-- endinject -->
-  <!-- inject:css -->
   <link rel="stylesheet" href="../../css/style.css">
-  <!-- endinject -->
   <link rel="shortcut icon" href="../../images/favicon.png" />
-
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 
@@ -286,227 +282,101 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["update_name"])) {
             <div class="col-md-12 grid-margin">
               <div class="d-flex justify-content-between align-items-center">
                 <div>
-                  <h4 class="font-weight-bold mb-0">Menu Items </h4>
-                </div>
-                <div>
-                    <button type="button" style="display: block;" id="addItemFormBtn" onclick="addItemForm()" class="btn btn-primary btn-icon-text btn-rounded">
-                      Add Items
-                    </button>
-                    <button type="button" style="display: none;" id="addItemFormCsBtn" onclick="addItemFormHide()" class="btn btn-danger btn-icon-text btn-rounded">
-                      Close
-                    </button>
+                  <h4 class="font-weight-bold mb-0">Orders </h4>
                 </div>
               </div>
             </div>
           </div>
-          
+        
 
-          <div class="col-12 grid-margin stretch-card" id="addItemForm" style="display: none;">
-            <div class="card">
-              <div class="card-body">
-
-                <form class="forms-sample" action="basic-table.php" method="post" enctype="multipart/form-data">
-                  <div class="form-group">
-                    <label for="exampleInputName1">Item Name</label>
-                    <input required style="height: 10px !important;" type="text" class="form-control" id="item_name" name="item_name" placeholder="Item Name">
-                  </div>
-
-                  <div class="form-group">
-                    <label for="category">Category</label>
-                    <select required class="form-control category" id="category" name="category">
-                    
-                        <?php
-                        echo '<option value="">Select Category</option>';
-                        include __DIR__ . '/../connection.php';
-                        $sql = 'SELECT DISTINCT category FROM category';
-                        $result = $conn->query($sql);
-                        if ($result->num_rows > 0) {
-                            while ($row = $result->fetch_assoc()) {
-                                echo '<option value="' . $row['category'] . '">' . $row['category'] . '</option>';
-                            }
-                        } else {
-                            echo '<option value="">No categories found</option>';
-                        }
-                        ?>
-                    </select>
-                  </div>
-
-                  <div class="form-group">
-                      <label for="subcategory">Subcategory</label>
-                      <select required class="form-control subcategory" name="subcategory">
-                          <option value="">Select a category first</option>
-                      </select>
-                  </div>
-
-                  <div class="form-group">
-                    <label>Upload Image</label>
-                    <input required style="height: 10px !important;" type="file" name="item_image" id="fileToUpload" class="file-upload-default">
-                    <div class="input-group col-xs-12">
-                      <input style="height: 10px !important;" type="text" class="form-control file-upload-info" disabled placeholder="Upload Image">
-                      <span style="height: 10px !important;" class="input-group-append">
-                        <button style="height: 10px !important; padding:14px !important; margin-bottom:5px !important" class="file-upload-browse btn btn-primary" type="button"><i class="fa fa-upload" aria-hidden="true"></i></button>
-                      </span>
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label for="exampleInputCity1">Price</label>
-                    <input required style="height: 10px !important;" type="text" class="form-control" name="price" id="price" placeholder="Price">
-                  </div>
-                  <div class="form-group">
-                    <label for="exampleTextarea1">Discription</label>
-                    <textarea required style="height: 20px !important;" class="form-control" id="desc" name="desc" rows="4"></textarea>
-                  </div>
-                  <button type="submit" class="btn btn-primary me-2">Submit</button>
-                </form>
-
-              </div>
-            </div>
-          </div>
-
-          <?php
-          include __DIR__ . '/../../../connection.php';
-
-          $sql = "SELECT * FROM menu_items";
-          $rice_cat_data = mysqli_query($conn, $sql);
-          $rice_row = mysqli_num_rows($rice_cat_data);
-
-          if ($rice_row > 0) {
-              $counter = 1;
-              while ($rice_row_no = mysqli_fetch_assoc($rice_cat_data)) {
-                $item_id = $rice_row_no['id'];
-                $item_name = $rice_row_no['name'];
-                $category = isset($rice_row_no['category']) ? $rice_row_no['category'] : ''; // Check if 'category' key exists
-                $img = isset($rice_row_no['img']) ? $rice_row_no['img'] : ''; // Check if 'img' key exists
-                $desc = isset($rice_row_no['descr']) ? $rice_row_no['descr'] : ''; // Check if 'descr' key exists
-                $price = $rice_row_no['price'];
-                  echo '<div class="col-12 grid-margin stretch-card" id="updateItemForm_' . $item_id . '" 
-                        style="display: none;
-                        
-                        position: fixed;
-                        width: 60%;
-                        top: 0;
-                        margin-top: 83px;
-                        right: 15%;
-                        z-index: 9;">
-                      <div class="card" style="background-color: #f0f7ff; border: 2px solid black">
-                          <div class="card-body">
-                              <button style="float:right; background-color:red; color:white; border:1px solid red; width:5%;" onclick="cancelUpdateForm('.$item_id.')"> X </button>
-                              <form class="forms-sample" action="basic-table.php" method="post" enctype="multipart/form-data">
-                                  Update Item
-                                  <div class="form-group">
-                                      <label for="exampleInputName1">Item Name</label>
-                                      <input value="'.$item_name.'" style="height: 10px !important;" type="text" class="form-control" id="update_name" name="update_name" placeholder="Item Name">
-                                  </div>
-
-                                  <div class="form-group">
-                                  <label for="category">Category</label>
-                                  <select required class="form-control category" id="category" name="category">';
-                                      echo '<option value="">Select Category</option>';
-                                      include __DIR__ . '/../connection.php';
-                                      $sql = 'SELECT DISTINCT category FROM category';
-                                      $result = $conn->query($sql);
-                                      if ($result->num_rows > 0) {
-                                          while ($row = $result->fetch_assoc()) {
-                                              echo '<option value="' . $row['category'] . '">' . $row['category'] . '</option>';
-                                          }
-                                      } else {
-                                          echo '<option value="">No categories found</option>';
-                                      }
-                                  echo '</select>
-                                </div>
-              
-                                <div class="form-group">
-                                    <label for="subcategory">Subcategory</label>
-                                    <select required class="form-control subcategory" name="subcategory">
-                                        <option value="">Select a category first</option>
-                                    </select>
-                                </div>';
-                                  echo '<div class="form-group">
-                                      <label for="exampleInputCity1">Price</label>
-                                      <input value="'.$price.'" style="height: 10px !important;" type="text" class="form-control" name="price" id="price" placeholder="Price">
-                                  </div>
-                                  <div class="form-group">
-                                      <label for="exampleTextarea1">Description</label>
-                                      <input value="'.$desc.'" style="height: 20px !important;" class="form-control" id="desc" name="desc" rows="4" >
-                                  </div>
-                                  <button type="submit" class="btn btn-primary me-2">Submit</button>
-                              </form>
-                          </div>
-                      </div>
-                  </div>';
-              }
-              } else {
-                  echo '<td style="padding:10px 0; text-align:center; font-size:16px" colspan=5>';
-                  echo ' Category is empty, please add menu items ! ';
-                  echo '</td>';
-              }
-              ?>
-              
           <div class="row">
-                
-              <?php
-              $sql = "SELECT DISTINCT category FROM menu_items";
-              $result = mysqli_query($conn, $sql);
+          <?php
+            $sqlCustomers = "SELECT * FROM customers ORDER BY id DESC";
+            $resultCustomers = $conn->query($sqlCustomers);
+            if ($resultCustomers->num_rows > 0) {
+                while ($customerRow = $resultCustomers->fetch_assoc()) {
+                    $customerId = $customerRow['id'];
+                    $customerName = $customerRow['name'];
+                    $mobileNumber = $customerRow['mo_no'];
+                    $address = $customerRow['address'];
+                    $plateCount = $customerRow['count'];
+                    $user_id = $customerRow['user_id'];
+                    $orderDate = date('d-m-Y', strtotime($customerRow['date']));
+                    $date = date('d-m-Y  h:m', strtotime($customerRow['order_date']));
+                    $sqlOrders = "SELECT * FROM orders WHERE customer_id = $customerId";
+                    $resultOrders = $conn->query($sqlOrders);
 
-              if (mysqli_num_rows($result) > 0) {
-                  while ($row = mysqli_fetch_assoc($result)) {
+                    $totalPrice = 0;
                     echo '<div class="col-lg-12 grid-margin stretch-card">
-                          <div class="card">
-                          <div class="card-body">';
-                      echo '<h4 class="card-title">' . $row['category'] . '</h4>';
-                      echo '<div class="table-responsive pt-1">';
-                      echo '<table class="table table-bordered">';
-                      echo '<thead>';
-                      echo '<tr style="padding: 5px 5px !important">';
-                      echo '<th>Sr.No.</th>';
-                      echo '<th>Name</th>';
-                      echo '<th>Sub Cat</th>';
-                      echo '<th>Price</th>';
-                      echo '<th>Edit</th>';
-                      echo '<th>Delete</th>';
-                      echo '</tr>';
-                      echo '</thead>';
-                      echo '<tbody class="pt-1">';
+                            <div class="card">
+                                <div class="card-body">
+                                <table style="width:100%">
+                                  <tr style="width:100%">
+                                    <th class="card-title"> Name : ' . $customerName . '</th>
+                                    <th class="card-title" style="text-align:center"> Mobile Number : ' . $mobileNumber . '</th>
+                                    <th class="card-title" style="text-align:right"> Plate Count : ' . $plateCount . '</th>
+                                  </tr>
+                                  <tr style="width:100%;">
+                                    <th class="card-title" > Date : ' . $orderDate . '</th>
+                                    <th class="card-title" style="text-align:center"> Cust. Id : '.$customerId.'</th>
+                                    <th class="card-title" style="text-align:right"> User Id : '.$user_id.'</th>
+                                  </tr>
+                                  <tr style="width:100%">
+                                    <th class="card-title"> Address : ' . $address . '</th>
+                                    <th class="card-title" style="text-align:center"> </th>
+                                    <th class="card-title" style="text-align:right"> Order Date : '.$date.'</th>
+                                  </tr>
+                                </table>';
+                    echo '<div class="table-responsive pt-1">';
+                    echo '<table class="table table-bordered">';
+                    echo '<thead>';
+                    echo '<tr style="padding: 5px 5px !important">';
+                    echo '<th>Sr.No.</th>';
+                    echo '<th>Product Name</th>';
+                    echo '<th>Category</th>';
+                    echo '<th>Price</th>';
+                    echo '<th>Quantity</th>';
+                    echo '</tr>';
+                    echo '</thead>';
+                    echo '<tbody class="pt-1">';
+                    if ($resultOrders->num_rows > 0) {
+                        $counter = 1;
+                        while ($row = $resultOrders->fetch_assoc()) {
+                            $productName = $row['product_name'];
+                            $productCat = $row['category'];
+                            $productPrice = $row['price'];
+                            $quantity = $row['quantity'];
+                            echo '<tr style="padding: 5px 5px !important">';
+                            echo '<td>' . $counter++ . '</td>';
+                            echo '<td>' . $productName . '</td>';
+                            echo '<td>' . $productCat . '</td>';
+                            echo '<td>' . $productPrice . '</td>';
+                            echo '<td>' . $quantity . '</td>';
+                            echo '</tr>';
 
-                      $category = $row['category'];
-                      $subcategory_sql = "SELECT * FROM menu_items WHERE category='$category'";
-                      $subcategory_result = mysqli_query($conn, $subcategory_sql);
-                      $counter = 1;
-
-                      while ($subcategory_row = mysqli_fetch_assoc($subcategory_result)) {
-                          echo '<tr style="padding: 5px 5px !important">';
-                          echo '<td>' . $counter++ . '</td>';
-                          echo '<td>' . $subcategory_row['name'] . '</td>';
-                          echo '<td>' . $subcategory_row['subcategory'] . '</td>';
-                          echo '<td>' . $subcategory_row['price'] . '</td>';
-                          echo '<td style="width: 5%;">';
-                          echo '<button type="button" onclick="updateItemForm(' . $subcategory_row['id'] . ');" style="padding: 5px; border-radius:5px;border:none;outline:none; background-color:white; color:rgb(0, 136, 255);">';
-                          echo '<i style="font-size: 20px;" class="fa fa-pencil-square-o" aria-hidden="true"></i>';
-                          echo '</button>';
-                          echo '</td>';
-                          echo '<td style="width: 5%;">';
-                          echo '<form method="post" action="basic-table.php">';
-                          echo '<input type="hidden" name="item_id" value="' . $subcategory_row['id'] . '">';
-                          echo '<button type="submit" onclick="return confirm(\'Are you sure you want to delete this item?\')" style="padding: 5px; border-radius:5px;border:none;outline:none; background-color:white; color:rgb(255, 0, 0);">';
-                          echo '<i style="font-size: 20px;" class="fa fa-trash" aria-hidden="true"></i>';
-                          echo '</button>';
-                          echo '</form>';
-                          echo '</td>';
-                          echo '</tr>';
-                      }
-                      echo '</tbody>';
-                      echo '</table>';
-                      echo '</div> 
-                            </div> 
+                            $totalPrice += ($productPrice * $quantity);
+                        }
+                    }
+                    echo '</tbody>';
+                    echo '</table><br>';
+                    echo '<table style="width:100%">';
+                    echo '<tr><th colspan="4" style="text-align:left">Total : ' . $totalPrice . '</th>';
+                    $totalPrice *= $plateCount;
+                    echo '<th colspan="4" style="text-align:right">'.$plateCount.' x Total : ' . $totalPrice . '</th></tr>';
+                    echo '</table>';
+                    echo '</div>
                             </div>
-                      </div>';  
-                  }
-              } else {
-                  echo '<h1 style="text-align:center; margin:auto;">No categories found</h1>';
-              }
-              ?>
-
+                        </div>
+                    </div>';
+                }
+            } else {
+                echo '<h1 style="text-align:center; margin:auto;">No categories found</h1>';
+            }
+            ?>
           </div>
+
+              
+          
         </div>
         <!-- content-wrapper ends -->
         <!-- partial:../../partials/_footer.php -->
@@ -542,26 +412,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["update_name"])) {
 
    <!-- ////// AJAX to fetch subcategory in the category -->
    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-   <!-- jQuery script -->
-  <script>
-      $(document).ready(function(){
-          // For insert form
-          $('.category').change(function(){
-              var category = $(this).val();
-              var subcategoryDropdown = $(this).closest('.card-body').find('.subcategory');
-              $.ajax({
-                  url: 'subcategories.php',
-                  type: 'GET',
-                  data: {category: category},
-                  success: function(data){
-                      subcategoryDropdown.html(data);
-                  }
-              });
-          });
-      });
-  </script>
-
-   <!-- <script>
+   <script>
        $(document).ready(function(){
            $('#category').change(function(){
                var category = $(this).val();
@@ -571,12 +422,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["update_name"])) {
                    data: {category: category},
                    success:function(data){
                        $('#subcategory').html(data);
+                       $('#subcategory1').html(data);
                    }
                });
            });
        });
-       
-   </script> -->
+   </script>
    <!-- ////////////////////////////////////////////////////////////// -->
 </body>
 

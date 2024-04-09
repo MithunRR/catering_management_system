@@ -40,14 +40,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Insert each cart item into 'orders' table
         while ($row_cart = $result_cart->fetch_assoc()) {
             $product_name = $row_cart['name'];
+            $product_cat = $row_cart['category'];
             $price = $row_cart['price'];
             $quantity = $row_cart['quantity'];
 
             // Insert each order with the customer ID
-            $sql_insert_order = "INSERT INTO orders (product_name, price, quantity, user_id, customer_id) 
-                                VALUES (?, ?, ?, ?, ?)";
+            $sql_insert_order = "INSERT INTO orders (product_name, category, price, quantity, user_id, customer_id) 
+                                VALUES (?, ?, ?, ?, ?, ?)";
             $stmt_insert_order = $conn->prepare($sql_insert_order);
-            $stmt_insert_order->bind_param("ssdii", $product_name, $price, $quantity, $user_data['id'], $customer_id);
+            $stmt_insert_order->bind_param("sssdii", $product_name, $product_cat, $price, $quantity, $user_data['id'], $customer_id);
             $stmt_insert_order->execute();
         }
 
@@ -233,10 +234,6 @@ function deleteCartItem($conn, $cart_id) {
             </div>
             <ul class="menu-items">
                 <li><a href="index.php">Home</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#food">Trending</a></li>
-                <li><a href="#food-menu">Menu</a></li>
-                <li><a href="#contact">Contact</a></li>
                 <li><a href="orders.php">Bookings</a></li>
                 <li><a href="booking.php">Cart</a></li>
                 <?php
@@ -259,6 +256,7 @@ function deleteCartItem($conn, $cart_id) {
             <thead>
                 <tr>
                     <th>Product</th>
+                    <th>Category</th>
                     <th>Price</th>
                     <th>Quantity</th>
                     <th>Total</th>
@@ -278,12 +276,14 @@ function deleteCartItem($conn, $cart_id) {
                 while ($row = $result->fetch_assoc()) {
                     $cart_id = $row['id'];
                     $productName = $row['name'];
+                    $productCat = $row['category'];
                     $productPrice = $row['price'];
                     $quantity = $row['quantity'];
                     $total = $productPrice * $quantity;
                     $grandTotal += $total;
                     echo '<tr>
                             <td>' . $productName . '</td>
+                            <td>' . $productCat . '</td>
                             <td>&#8377;' . $productPrice . '</td>
                             <td class="quantity">
                               <form method="post">
@@ -314,12 +314,12 @@ function deleteCartItem($conn, $cart_id) {
     <form action="" method="post">
       <div class="customer-details" style="margin:10px auto !important;">
           <h2>Customer Details</h2>
-          <input type="text" name="name" placeholder="Name">
-          <input type="text" name="mo_no" placeholder="Mobile Number">
-          <input type="text" name="address" placeholder="Address">
-          <input type="text" name="count" placeholder="Plate Count">
+          <input type="text" required name="name" placeholder="Name">
+          <input type="text" required name="mo_no" maxlength="10" placeholder="Mobile Number">
+          <input type="text" required name="address" placeholder="Address">
+          <input type="text" required name="count" placeholder="Plate Count">
           <?php date_default_timezone_set('Asia/Kolkata'); ?>
-          <input type="date" name="date" placeholder="Date" min="<?php echo date('Y-m-d'); ?>">
+          <input type="date" required name="date" placeholder="Date" min="<?php echo date('Y-m-d'); ?>">
       </div>
       <button type="submit" name="place_order" style="text-align:center; width:100%" class="checkout-btn">Place Order</button>
   </form>

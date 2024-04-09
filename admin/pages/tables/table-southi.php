@@ -255,7 +255,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["update_name"])) {
     <div class="container-fluid page-body-wrapper">
       <!-- partial:../../partials/_sidebar.php -->
       <nav class="sidebar sidebar-offcanvas" id="sidebar">
-        <ul class="nav">
+      <ul class="nav">
           <li class="nav-item">
             <a class="nav-link" href="../../index.php">
               <i class="ti-shield menu-icon"></i>
@@ -263,17 +263,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["update_name"])) {
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="basic-table.php">
-              <i class="ti-view-list-alt menu-icon fa fa-star" aria-hidden="true"></i>
-              <span class="menu-title">Premium Menu</span>
+            <a class="nav-link" href="../../pages/tables/basic-table.php">
+            <i class="ti-view-list-alt menu-icon fa fa-cutlery" aria-hidden="true"></i>
+              <span class="menu-title">Menu</span>
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="table-southi.php">
-            <i class="ti-view-list-alt menu-icon fa fa-cutlery" aria-hidden="true"></i>
-              <span class="menu-title">Normal Menu</span>
+            <a class="nav-link" href="orders.php">
+            <i class="ti-view-list-alt menu-icon fa fa-cart-arrow-down" aria-hidden="true"></i>
+              <span class="menu-title">Orders</span>
             </a>
           </li>
+          
+          <li class="nav-item">
+            <a class="nav-link" href="../../pages/tables/contacts.php">
+              <i class="ti-view-list-alt menu-icon fa fa-commenting" aria-hidden="true"></i>
+              <span class="menu-title">Contacts</span>
+            </a>
+          </li>
+          
         </ul>
       </nav>
       <!-- partial -->

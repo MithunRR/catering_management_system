@@ -132,13 +132,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
           </div>
           <ul class="menu-items">
             <li><a href="index.php">Home</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#food">Category</a></li>
-            <li><a href="#food-menu">Menu</a></li>
-            <li><a href="#contact">Contact</a></li>
             <li><a href="signup.php">Signup</a></li>
           </ul>
-          <h1 class="logo">RS</h1>
+          <h1 class="logo">Zaika</h1>
       </div>
     </nav>
   </div>

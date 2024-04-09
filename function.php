@@ -1,5 +1,8 @@
 <?php
+
 function check_login($con){
+    date_default_timezone_set('Asia/Kolkata');
+    
     if(isset($_SESSION['mo_no'])){
         $id = $_SESSION['mo_no'];
         $query = "select * from users where mo_no = '$id' limit 1";

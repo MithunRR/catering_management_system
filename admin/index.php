@@ -1,3 +1,93 @@
+<?php
+include __DIR__ . '/../connection.php';
+include __DIR__ . '/../function.php';
+
+// Add Category
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['category1']) && isset($_POST['subcategory1'])) {
+    $category = $_POST['category1'];
+    $subcategory = $_POST['subcategory1'];
+
+    $check_sql = "SELECT * FROM category WHERE category = '$category' AND subcategory = '$subcategory'";
+    $result = $conn->query($check_sql);
+    if ($result->num_rows > 0) {
+      echo '<script>alert("Category and subcategory already exist.");</script>';
+    } else {
+        $sql = "INSERT INTO category (category, subcategory) VALUES ('$category', '$subcategory')";
+        if ($conn->query($sql) === TRUE) {
+            echo '<script>alert("Category and subcategory added successfully.");</script>';
+        } else {
+            echo '<script>alert("Error adding category and subcategory: ."'.$conn->error.');</script>' ;
+        }
+    }
+
+    header("location: index.php");
+}
+
+// Delete Category
+if (isset($_POST['delete_category'])) {
+  $delete_id = $_POST['delete_category'];
+
+  $query = "DELETE FROM category WHERE id = $delete_id";
+  $result = $conn->query($query);
+
+  if ($result) {
+      echo "success";
+  } else {
+      echo "error";
+  }
+  // header("location: index.php");
+  exit();
+}
+// Delete Category
+// if (isset($_POST['delete_category'])) {
+//     $delete_id = $_POST['delete_category'];
+
+//     $query = "DELETE FROM category WHERE id = $delete_id";
+//     $result = $conn->query($query);
+
+//     if ($result) {
+//         echo "success";
+//     } else {
+//         echo "error: " . $conn->error; // Print the error message if the query fails
+//     }
+//     exit(); // Exit the script after handling the delete request
+// }
+
+
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+  $category = $_POST['category']; 
+  $file_name = $_FILES['fileToUpload']['name'];
+  $file_tmp = $_FILES['fileToUpload']['tmp_name']; 
+
+  if (!empty($category) && !empty($file_name) && !empty($file_tmp)) {
+      $upload_dir = "pages/tables/uploads/";
+      $target_file = $upload_dir . basename($file_name);
+
+      if (move_uploaded_file($file_tmp, $target_file)) {
+          $check_category_sql = "SELECT category FROM category WHERE category = '$category'";
+          $check_result = $conn->query($check_category_sql);
+          if ($check_result->num_rows > 0) {
+              $insert_sql = "UPDATE category SET images = '$target_file' WHERE category = '$category'";
+              if ($conn->query($insert_sql) === TRUE) {
+                  echo "New record inserted successfully.";
+              } else {
+                  echo "Error: " . $insert_sql . "<br>" . $conn->error;
+              }
+          } else {
+              echo "Category does not exist.";
+          }
+      } else {
+          echo "Sorry, there was an error uploading your file.";
+      }
+  } else {
+      echo "Category and image are required fields.";
+  }
+  header("location: index.php");
+}
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -168,28 +258,26 @@
           </li>
           <li class="nav-item">
             <a class="nav-link" href="pages/tables/basic-table.php">
-            <i class="ti-view-list-alt menu-icon fa fa-star" aria-hidden="true"></i>
-              <span class="menu-title">Premium Menu</span>
-            </a>
-          </li>
-          <li class="nav-item">
-          <a class="nav-link" href="pages/tables/table-southi.php">
             <i class="ti-view-list-alt menu-icon fa fa-cutlery" aria-hidden="true"></i>
-              <span class="menu-title">Normal Menu</span>
+              <span class="menu-title">Menu</span>
             </a>
           </li>
           <li class="nav-item">
-          <a class="nav-link" href="pages/tables/table-southi.php">
+            <a class="nav-link" href="pages/tables/orders.php">
             <i class="ti-view-list-alt menu-icon fa fa-cart-arrow-down" aria-hidden="true"></i>
               <span class="menu-title">Orders</span>
             </a>
           </li>
+          
           <li class="nav-item">
-          <a class="nav-link" href="pages/tables/table-southi.php">
-            <i class="ti-view-list-alt menu-icon fa fa-commenting" aria-hidden="true"></i>
+            <a class="nav-link" href="pages/tables/contacts.php">
+              <i class="ti-view-list-alt menu-icon fa fa-commenting" aria-hidden="true"></i>
               <span class="menu-title">Contacts</span>
             </a>
           </li>
+          
+        </ul>
+          
         </ul>
       </nav>
       <!-- partial -->
@@ -213,24 +301,57 @@
             <div class="col-md-3 grid-margin stretch-card">
               <div class="card">
                 <div class="card-body">
-                  <p class="card-title text-md-center text-xl-left">Sales</p>
-                  <div class="d-flex flex-wrap justify-content-between justify-content-md-center justify-content-xl-between align-items-center">
-                    <h3 class="mb-0 mb-md-2 mb-xl-0 order-md-1 order-xl-0">34040</h3>
-                    <i class="ti-calendar icon-md text-muted mb-0 mb-md-3 mb-xl-0"></i>
-                  </div>  
-                  <p class="mb-0 mt-2 text-danger">0.12% <span class="text-black ms-1"><small>(30 days)</small></span></p>
+                  <p class="card-title text-md-center text-xl-left">Add Category</p>
+                  <form class="forms-sample" action="index.php" method="post" enctype="multipart/form-data">
+                    <div class="form-group">
+                      <label for="category1">Category</label>
+                      <input required style="height: 10px !important;" type="text" class="form-control" id="category1" name="category1" placeholder="Enter Category">
+                      <br>
+                      <label for="subcategory1">Sub Category</label>
+                      <input required style="height: 10px !important;" type="text" class="form-control" id="subcategory1" name="subcategory1" placeholder="Enter Sub Category">
+                    </div>
+                    <button type="submit" style="background:#4da6ff; padding:7px; border-radius:7px; ">
+                        Add Category
+                    </button>
+                  </form>
                 </div>
               </div>
             </div>
             <div class="col-md-3 grid-margin stretch-card">
               <div class="card">
                 <div class="card-body">
-                  <p class="card-title text-md-center text-xl-left">Revenue</p>
-                  <div class="d-flex flex-wrap justify-content-between justify-content-md-center justify-content-xl-between align-items-center">
-                    <h3 class="mb-0 mb-md-2 mb-xl-0 order-md-1 order-xl-0">47033</h3>
-                    <i class="ti-user icon-md text-muted mb-0 mb-md-3 mb-xl-0"></i>
-                  </div>  
-                  <p class="mb-0 mt-2 text-danger">0.47% <span class="text-black ms-1"><small>(30 days)</small></span></p>
+                  <p class="card-title text-md-center text-xl-left">Category Images</p>
+                  <form class="forms-sample" action="index.php" method="post" enctype="multipart/form-data">
+                    <div class="form-group">
+                      <label for="category1">Category</label>
+                      <div class="form-group">
+                        <select required class="form-control category" id="category" name="category">
+                            <?php
+                            echo '<option value="">Select Category</option>';
+                            include __DIR__ . '/../connection.php';
+                            $sql = 'SELECT DISTINCT category FROM category';
+                            $result = $conn->query($sql);
+                            if ($result->num_rows > 0) {
+                                while ($row = $result->fetch_assoc()) {
+                                    echo '<option value="' . $row['category'] . '">' . $row['category'] . '</option>';
+                                }
+                            } else {
+                                echo '<option value="">No categories found</option>';
+                            }
+                            ?>
+                        </select>
+                      </div>
+                      <div class="form-group">
+                        <label>Upload Image</label>
+                        <div class="input-group col-xs-12">
+                          <input type="file" name="fileToUpload" id="fileToUpload">
+                        </div>
+                      </div>
+                    </div>
+                    <button type="submit" style="background:#4da6ff; padding:7px; border-radius:7px; ">
+                        Upload
+                    </button>
+                  </form>
                 </div>
               </div>
             </div>
@@ -315,96 +436,69 @@
             </div>
           </div>
           <div class="row">
-            <div class="col-md-7 grid-margin stretch-card">
-              <div class="card">
-                <div class="card-body">
-                  <p class="card-title mb-0">Top Products</p>
-                  <div class="table-responsive">
-                    <table class="table table-hover">
-                      <thead>
-                        <tr>
-                          <th>User</th>
-                          <th>Product</th>
-                          <th>Sale</th>
-                          <th>Status</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <td>Jacob</td>
-                          <td>Photoshop</td>
-                          <td class="text-danger"> 28.76% <i class="ti-arrow-down"></i></td>
-                          <td><label class="badge badge-danger">Pending</label></td>
-                        </tr>
-                        <tr>
-                          <td>Messsy</td>
-                          <td>Flash</td>
-                          <td class="text-danger"> 21.06% <i class="ti-arrow-down"></i></td>
-                          <td><label class="badge badge-warning">In progress</label></td>
-                        </tr>
-                        <tr>
-                          <td>John</td>
-                          <td>Premier</td>
-                          <td class="text-danger"> 35.00% <i class="ti-arrow-down"></i></td>
-                          <td><label class="badge badge-info">Fixed</label></td>
-                        </tr>
-                        <tr>
-                          <td>Peter</td>
-                          <td>After effects</td>
-                          <td class="text-success"> 82.00% <i class="ti-arrow-up"></i></td>
-                          <td><label class="badge badge-success">Completed</label></td>
-                        </tr>
-                        <tr>
-                          <td>Dave</td>
-                          <td>53275535</td>
-                          <td class="text-success"> 98.05% <i class="ti-arrow-up"></i></td>
-                          <td><label class="badge badge-warning">In progress</label></td>
-                        </tr>
-                        <tr>
-                          <td>Messsy</td>
-                          <td>Flash</td>
-                          <td class="text-danger"> 21.06% <i class="ti-arrow-down"></i></td>
-                          <td><label class="badge badge-info">Fixed</label></td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
+            <div class="col-md-7 grid-margin stretch-card" style="height: 430px">
+                <div class="card">
+                    <div class="card-body">
+                        <p class="card-title mb-0">Categories</p>
+                        <hr>
+                        <div class="table-responsive" style="max-height: 350px; overflow-y: auto;">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th style="font-size:18px; height: 25px;">Category</th>
+                                        <th style="font-size:18px; height: 25px;">Sub Category</th>
+                                        <th style="font-size:18px; height: 25px;">Delete</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php
+                                    $query = "SELECT * FROM category";
+                                    $result = $conn->query($query);
+                                    while ($row = $result->fetch_assoc()) {
+                                        echo '<tr>
+                                                <td>' . $row['category'] . '</td>
+                                                <td>' . $row['subcategory'] . '</td>
+                                                <td style="font-size:25px; height: 25px;">
+                                                    <button class="delete-button" data-id="' . $row['id'] . '" style="color:red; border:none; background:none">
+                                                        <i class="fa fa-trash"></i>
+                                                    </button>
+                                                </td>
+                                              </tr>';
+                                    }
+                                    ?>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
-              </div>
             </div>
-            <div class="col-md-5 grid-margin stretch-card">
+            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+            <script>
+                jQuery(document).ready(function() {
+                    jQuery(".delete-button").click(function() {
+                        var delete_id = jQuery(this).data('id');
+                        var row = jQuery(this).closest("tr");
+                        var confirmation = confirm("Are you sure you want to delete this category?");
+                        if (confirmation) {
+                            jQuery.post("", { delete_category: delete_id }, function(data) {
+                                if (data === "success") {
+                                    row.remove();
+                                } else {
+                                    alert("Failed to delete category.");
+                                }
+                            });
+                        }
+                    });
+                });
+            </script>
+
+
+            <div class="col-md-5 grid-margin stretch-card" style="height: 430px">
 							<div class="card">
 								<div class="card-body">
 									<h4 class="card-title">To Do Lists</h4>
 									<div class="list-wrapper pt-2">
 										<ul class="d-flex flex-column-reverse todo-list todo-list-custom">
-											<li>
-												<div class="form-check form-check-flat">
-													<label class="form-check-label">
-														<input class="checkbox" type="checkbox">
-														Become A Travel Pro In One Easy Lesson
-													</label>
-												</div>
-												<i class="remove ti-trash"></i>
-											</li>
-											<li class="completed">
-												<div class="form-check form-check-flat">
-													<label class="form-check-label">
-														<input class="checkbox" type="checkbox" checked>
-														See The Unmatched Beauty Of The Great Lakes
-													</label>
-												</div>
-												<i class="remove ti-trash"></i>
-											</li>
-											<li>
-												<div class="form-check form-check-flat">
-													<label class="form-check-label">
-														<input class="checkbox" type="checkbox">
-														Copper Canyon
-													</label>
-												</div>
-												<i class="remove ti-trash"></i>
-											</li>
 											<li class="completed">
 												<div class="form-check form-check-flat">
 													<label class="form-check-label">
@@ -425,10 +519,6 @@
 											</li>
 										</ul>
                   </div>
-                  <div class="add-items d-flex mb-0 mt-4">
-										<input type="text" class="form-control todo-list-input me-2"  placeholder="Add new task">
-										<button class="add btn btn-icon text-primary todo-list-add-btn bg-transparent"><i class="ti-location-arrow"></i></button>
-									</div>
 								</div>
 							</div>
             </div>
